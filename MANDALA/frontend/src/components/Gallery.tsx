@@ -3,29 +3,18 @@ import { X } from 'lucide-react';
 
 const images = [
   {
-    url: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-    title: 'Modern Cut',
+    url: 'https://images.pexels.com/photos/7181612/pexels-photo-7181612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    title: 'Hand Drawn',
   },
   {
-    url: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-    title: 'Color Treatment',
+    url: 'https://img.freepik.com/free-vector/hand-drawn-mandala-lotus-flower-drawing_23-2149380813.jpg?t=st=1742399015~exp=1742402615~hmac=bb877963e00fd84e0c8e61612f1b9094f637a7ae4c9cc6ba6592a64c54c2f15e&w=900',
+    title: 'Custom Orders',
   },
   {
-    url: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-    title: 'Elegant Style',
+    url: 'https://images.pexels.com/photos/1447934/pexels-photo-1447934.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    title: 'Digital',
   },
-  {
-    url: 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-    title: 'Classic Cut',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-    title: 'Hair Treatment',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1522336572468-97b06e8ef143?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-    title: 'Styling',
-  },
+
 ];
 
 const Gallery = () => {
@@ -50,7 +39,7 @@ const Gallery = () => {
                 alt={image.title}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <h3 className="text-white text-xl font-semibold">{image.title}</h3>
               </div>
             </div>
@@ -59,7 +48,7 @@ const Gallery = () => {
       </div>
 
       {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
           <button
             onClick={() => setSelectedImage(null)}
             className="absolute top-4 right-4 text-white hover:text-red-500"
