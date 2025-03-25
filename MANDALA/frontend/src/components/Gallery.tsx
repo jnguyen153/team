@@ -23,7 +23,7 @@ const Gallery = () => {
   return (
     <section id="gallery" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-200 mb-16">
           Our Work
         </h2>
 
@@ -51,7 +51,7 @@ const Gallery = () => {
         <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
           <button
             onClick={() => setSelectedImage(null)}
-            className="absolute top-4 right-4 text-white hover:text-red-500"
+            className="absolute top-4 right-4 text-white hover:text-blue-200"
           >
             <X size={32} />
           </button>
