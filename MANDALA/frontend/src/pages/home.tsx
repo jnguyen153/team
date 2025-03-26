@@ -4,7 +4,7 @@ import About from '../components/About';
 import Gallery from '../components/Gallery';
 import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
-import BookingForm from '../components/BookingForm';
+import ContactForm from '../components/ContactForm';
 import Footer from '../components/Footer';
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
       <Gallery />
       <Testimonials />
       <FAQ />
-      <BookingForm />
+      <ContactForm />
       <Footer />
     </div>
   );
