@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React FullCalendar</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.15/index.global.min.js"></script>
+</head>
+<body>
+
+    <h1>My FullCalendar in React</h1>
+    <div id="calendar-root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { Calendar } = FullCalendar;
+
+        function MyCalendar() {
+            const calendarRef = React.useRef(null);
+
+            useEffect(() => {
+                const calendar = new Calendar(calendarRef.current, {
+                    plugins: [FullCalendar.DayGrid, FullCalendar.TimeGrid],
+                    initialView: "dayGridMonth",
+                    headerToolbar: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth,timeGridWeek,timeGridDay",
+                    },
+                    events: [
+                        { title: "Event 1", start: "2025-03-25" },
+                        { title: "Event 2", start: "2025-03-28" },
+                    ],
+                    eventClick: function(info) {
+                        alert(`Event: ${info.event.title}`);
+                    }
+                });
+
+                calendar.render();
+            }, []);
+
+            return <div ref={calendarRef}></div>;
+        }
+
+        createRoot(document.getElementById("calendar-root")).render(<MyCalendar />);
+    </script>
+
+</body>
+</html>
