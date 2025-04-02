@@ -1,19 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/home';
+import Products from "./pages/gallery";
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          {/* Add more routes here later */}
-        </Routes>
-      </div>
-    </Router>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="gallery" element={<Products />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;

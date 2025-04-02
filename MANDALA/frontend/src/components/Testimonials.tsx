@@ -5,17 +5,17 @@ const testimonials = [
   {
     name: 'Sarah Johnson',
     image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-    text: 'Absolutely love how my hair turns out every time I visit Red & White. The staff is professional and friendly!',
+    text: 'Great Mandalas only here',
   },
   {
     name: 'Michael Chen',
     image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-    text: "Best salon experience I've ever had. They really listen to what you want and deliver amazing results.",
+    text: "Very relaxing and lovely Mandalas",
   },
   {
     name: 'Emma Davis',
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-    text: "The attention to detail and level of service here is outstanding. Wouldn't trust anyone else with my hair!",
+    text: "Perfect Mandalas for everyone!",
   },
 ];
 

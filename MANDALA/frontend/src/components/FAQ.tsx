@@ -3,20 +3,20 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const faqs = [
   {
-    question: 'What are your operating hours?',
-    answer: 'We are open Monday through Saturday from 9:00 AM to 7:00 PM. Sundays we are open from 10:00 AM to 5:00 PM.',
+    question: 'How can I place an order?',
+    answer: 'Just go to Shop and select Mandalas you like.',
   },
   {
-    question: 'Do I need to make an appointment?',
-    answer: 'While we do accept walk-ins, we recommend booking an appointment to ensure you get your preferred time slot and stylist.',
+    question: 'Do you have a return policy?',
+    answer: 'Absolutely! You can read our return policy in About.',
   },
   {
-    question: 'What is your cancellation policy?',
-    answer: 'We require at least 24 hours notice for cancellations. Late cancellations may be subject to a fee.',
+    question: 'How fast I will get an order?',
+    answer: 'You can select different delivery options, but it is also based on your location.',
   },
   {
-    question: 'Do you offer consultations?',
-    answer: 'Yes, we offer free consultations for color services and major style changes.',
+    question: 'Do you offer personal Mandalas?',
+    answer: 'Yes, we offer personal Mandalas with unique design.',
   },
 ];
 

@@ -45,3 +45,4 @@ const GalleryPreview = () => {
 };
 
 export default GalleryPreview;
+
