@@ -45,7 +45,7 @@ const Navbar = () => {
               <a href="#gallery" className={`font-bold hover:text-blue-200 transition-colors ${
                 isScrolled ? 'text-black' : 'text-white'
               }`}>Gallery</a>
-              <a href="#product" className={`font-bold hover:text-blue-200 transition-colors ${
+              <a href="/gallery" className={`font-bold hover:text-blue-200 transition-colors ${
                 isScrolled ? 'text-black' : 'text-white'
               }`}>Shop</a>
               <div className="relative" ref={dropdownRef}>
@@ -97,7 +97,7 @@ const Navbar = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
             <a href="#about" className="block px-3 py-2 text-black font-bold hover:text-red-600">About</a>
             <a href="#gallery" className="block px-3 py-2 text-black font-bold hover:text-red-600">Gallery</a>
-            <a href="#product" className="block px-3 py-2 text-black font-bold hover:text-red-600">Product</a>
+            <a href="/gallery" className="block px-3 py-2 text-black font-bold hover:text-red-600">Product</a>
             <a href="#contact" className="block px-3 py-2 bg-red-600 text-white font-bold rounded-md">Contact Us</a>
             <a href="#cart" className="block px-3 py-2 text-black font-bold hover:text-red-600">
               Cart (0)
