@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+    background-color: #FFFFF0;
+    color: #132245;
+}
+
+header {
+    position: sticky;
+    width: 100%;
+    padding: 1rem 9%;
+    background-color: #132245;
+    border: 2px solid #50403E;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 3rem;
+    color: #FEDE42;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    color: #FF791F;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+nav a {
+    font-size: 1.8rem;
+    color: #E9EDC8;
+    margin-left: 4rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+nav a:hover, nav a.active {
+    color: #FF791F;
+    border-bottom: 3px solid #FEDE42;
+}
+
+section {
+    min-height: 100vh;
+    padding: 5rem 9%;
+}
+
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+    background-color: #FFFFF0;
+}
+
+.home .home-content h1 {
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #132245;
+}
+
+h1 {
+    position: sticky;
+    top: 0;
+    background-color: #FFFFF0;
+    z-index: 99;
+    padding: 10px 0;
+}
+
+.home-content p {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    color: #50403E;
+}
+
+.home-img img {
+    width: 32vw;
+    border-radius: 50%;
+    box-shadow: 0 0 25px rgba(0, 90, 139, 0.3);
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background-color: #50403E;
+    margin: 40px 0;
+}
+
+footer {
+    background-color: #132245;
+    color: #E9EDC8;
+    padding: 2rem 9%;
+    text-align: center;
+    border-top: 2px solid #50403E;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin: 1rem;
+}
+
+.footer-section h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #FEDE42;
+}
+
+.footer-section p {
+    font-size: 1.4rem;
+    color: #E9EDC8;
+}
+
+.footer-section a {
+    color: #E9EDC8;
+    font-weight: 600;
+}
+
+.footer-section a:hover {
+    color: #FEDE42;
+}
+
+.footer-section a i {
+    font-size: 2.5rem;
+    margin: 0 10px;
+    transition: transform 0.3s ease;
+}
+
+.footer-section a i:hover {
+    transform: scale(1.9);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #132245;
+    min-width: 160px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    overflow: hidden;
+    display: none;
+    z-index: 200;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-align: left;
+    white-space: nowrap;
+    color: #E9EDC8;
+    transition: background 0.3s ease-in-out;
+}
+
+.dropdown-content a:hover {
+    background: #005A8B;
+    color: #FEDE42;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* ALUMNI SECTION */
+
+@keyframes slide {
+    from {
+        transform: translateX(0)
+    }
+    to {
+        transform: translateX(-100%);
+    }
+    
+}
+
+.alumni{
+    overflow: hidden;
+    padding: 60px 0;
+    background: white;
+    white-space: nowrap;
+    position: relative;
+}
+
+.alumni:before,
+.alumni:after {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+}
+
+.alumni:before {
+    left: 0;
+    background: linear-gradient(to left,rgba(255,255,255,0), white);
+}
+
+.alumni:after {
+    right: 0;
+    background: linear-gradient(to right,rgba(255,255,255,0), white);
+}
+
+.alumni:hover .alumni-images {
+    animation-play-state: paused;
+}
+
+.alumni-images {
+    display: inline-block;
+    animation: 7s slide infinite linear;
+}
+
+.alumni-images img {
+    height: 125px;
+    margin: 0 35px;
+}
+
+/* ALUMNI END */

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venture Development Center</title>
+    <style>
+        /* Reset and contain all styles within the hero container */
+        #vdc-hero-container {
+            background-color: #2a2a72; /* Shows if image fails */
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background-image: url(Blur.png);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Photo box styles */
+        #vdc-hero-container .photo-box {
+            position: relative;
+            width: 70%;
+            height: 80%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        #vdc-hero-container .photo-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #666666;
+            background-image: url(TextBox.jpg);
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.7) sepia(100%) hue-rotate(200deg) saturate(300%);
+            z-index: -1;
+        }
+
+        /* Content styles */
+        #vdc-hero-container .content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            box-sizing: border-box;
+        }
+
+        /* Text animation styles */
+        #vdc-hero-container h1 {
+            color: #EFE0CD;
+            margin: 0;
+            line-height: 1.8;
+            font-size: 150px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #vdc-hero-container .word-container {
+            display: flex;
+            align-items: center;
+            height: 140px;
+        }
+
+        #vdc-hero-container .word {
+            display: inline-block;
+            min-width: 10px;
+        }
+
+        #vdc-hero-container .cursor {
+            display: inline-block;
+            width: 4px;
+            height: 100px;
+            background-color: #EFE0CD;
+            animation: blink 1s infinite;
+            margin-left: 4px;
+        }
+
+        #vdc-hero-container .dots {
+            display: inline-block;
+            width: 40px;
+            text-align: left;
+        }
+
+        /* Animations */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0; transform: translateY(0); }
+            25% { opacity: 0.3; transform: translateY(-2px); }
+            50% { opacity: 1; transform: translateY(0); }
+        }
+
+        #vdc-hero-container .dots span {
+            display: inline-block;
+            color: #EFE0CD;
+            font-size: 36px;
+            animation: dotPulse 2.5s infinite ease-in-out;
+        }
+
+        #vdc-hero-container .dots span:nth-child(1) { animation-delay: 0s; }
+        #vdc-hero-container .dots span:nth-child(2) { animation-delay: 0.5s; }
+        #vdc-hero-container .dots span:nth-child(3) { animation-delay: 1s; }
+    </style>
+</head>
+<body id="vdc-hero-container">
+    <div class="photo-box">
+        <div class="content">
+            <h1>
+                <div class="word-container">
+                    <span class="word" id="word1">Venture</span>
+                    <span class="cursor"></span>
+                </div>
+                <div class="word-container">
+                    <span class="word" id="word2">Development</span>
+                    <span class="cursor"></span>
+                </div>
+                <div class="word-container">
+                    <span class="word" id="word3">Center</span>
+                    <span class="cursor"></span>
+                </div>
+            </h1>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const ORIGINAL_PHRASE = ["Venture", "Development", "Center"];
+        const CYCLES_BEFORE_ORIGINAL = 3;
+        
+        // Expanded randomized synonyms
+        const ALTERNATIVES = {
+            word1: ["Visionary", "Vibrant", "Valiant", "Vanguard", "Vital", "Vigorous"],
+            word2: ["Dedicated", "Driven", "Dynamic", "Disruptive", "Determined", "Daring"],
+            word3: ["Creative", "Collaborative", "Catalyst", "Core", "Collective", "Convergence"]
+        };
+
+        // Timing (milliseconds)
+        const SPEEDS = {
+            typing: 80,
+            deleting: 40,
+            thinking: 2000,
+            altWordPause: 1200,
+            originalPause: 3000
+        };
+
+        // State tracking
+        let currentCycle = 0;
+        let isOriginalPhase = false;
+        let lastUsedIndices = { word1: -1, word2: -1, word3: -1 };
+
+        // DOM elements
+        const elements = {
+            word1: document.getElementById("word1"),
+            word2: document.getElementById("word2"),
+            word3: document.getElementById("word3")
+        };
+
+        // Get random non-repeating synonym
+        function getRandomSynonym(wordKey) {
+            const options = ALTERNATIVES[wordKey];
+            let randomIndex;
+            
+            do {
+                randomIndex = Math.floor(Math.random() * options.length);
+            } while (
+                options.length > 1 && 
+                randomIndex === lastUsedIndices[wordKey]
+            );
+            
+            lastUsedIndices[wordKey] = randomIndex;
+            return options[randomIndex];
+        }
+
+        // Show thinking dots with slower animation
+        function showThinkingDots(element, callback) {
+            const dots = document.createElement('span');
+            dots.className = 'dots';
+            dots.innerHTML = '<span>.</span><span>.</span><span>.</span>';
+            element.parentNode.insertBefore(dots, element.nextSibling);
+            
+            setTimeout(() => {
+                dots.remove();
+                if (callback) callback();
+            }, SPEEDS.thinking);
+        }
+
+        // Type/delete functions
+        function typeWriter(element, word, callback) {
+            let i = 0;
+            element.textContent = "";
+            
+            function typing() {
+                if (i < word.length) {
+                    element.textContent += word[i];
+                    i++;
+                    setTimeout(typing, SPEEDS.typing);
+                } else if (callback) {
+                    setTimeout(callback, isOriginalPhase ? SPEEDS.originalPause : SPEEDS.altWordPause);
+                }
+            }
+            typing();
+        }
+
+        function deleteText(element, callback) {
+            let text = element.textContent;
+            
+            function deleting() {
+                if (text.length > 1) {
+                    text = text.slice(0, -1);
+                    element.textContent = text;
+                    setTimeout(deleting, SPEEDS.deleting);
+                } else {
+                    showThinkingDots(element, callback);
+                }
+            }
+            deleting();
+        }
+
+        // Main animation cycle with random selection
+        function startCycle() {
+            if (currentCycle >= CYCLES_BEFORE_ORIGINAL) {
+                // Return to original phrase
+                isOriginalPhase = true;
+                currentCycle = 0;
+                animateAll({
+                    word1: ORIGINAL_PHRASE[0],
+                    word2: ORIGINAL_PHRASE[1],
+                    word3: ORIGINAL_PHRASE[2]
+                }, () => {
+                    isOriginalPhase = false;
+                    setTimeout(startCycle, 100);
+                });
+            } else {
+                // Show random alternatives
+                currentCycle++;
+                animateAll({
+                    word1: getRandomSynonym('word1'),
+                    word2: getRandomSynonym('word2'),
+                    word3: getRandomSynonym('word3')
+                }, () => {
+                    setTimeout(startCycle, 100);
+                });
+            }
+        }
+
+        // Sync animation helper
+        function animateAll(targetWords, callback) {
+            let completed = 0;
+            const checkCompletion = () => ++completed === 3 && callback();
+            
+            for (const [id, word] of Object.entries(elements)) {
+                deleteText(word, () => {
+                    typeWriter(word, targetWords[id], checkCompletion);
+                });
+            }
+        }
+
+        // Start with random synonyms first
+        setTimeout(() => {
+            animateAll({
+                word1: getRandomSynonym('word1'),
+                word2: getRandomSynonym('word2'),
+                word3: getRandomSynonym('word3')
+            }, startCycle);
+        }, 1000);
+    </script>
+</body>
+</html>
