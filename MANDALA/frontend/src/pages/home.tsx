@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import About from '../components/About';
-import Gallery from '../components/Gallery';
+import GalleryPreview from '../components/GalleryPreview';
 import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
 import ContactForm from '../components/ContactForm';
@@ -13,7 +13,7 @@ const Home = () => {
       <Navbar />
       <Hero />
       <About />
-      <Gallery />
+      <GalleryPreview />
       <Testimonials />
       <FAQ />
       <ContactForm />
