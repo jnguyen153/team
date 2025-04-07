@@ -41,18 +41,48 @@
             </div>
         </nav>
     </header>
-    
-    <section class="home">
-        <div class="home-img">
-            <img src="main.jpg" alt="">
-        </div>
-        <div class="home-content">
-            <h1 class="sticky-header"><a href="index.html" class="home" >Click To Return To Home Page</a> 
-                <span></span></h1>
-        </div>
+
+    <section class="contact">
         
+        <form action="https://formsubmit.co/h3nriquebarcelos@gmail.com" method="POST">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
+
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+
+            <input type="hidden" name="_subject" value="New Contact Form Submission">
+            <input type="hidden" name="_next" value="http://127.0.0.1:5500/index.html"> 
+            
+            <button type="submit" class="btn">Send Message</button>
+        </form>
     </section>
 
+    <section class="book-meeting-section">
+        <div class="booking-button-container">
+          <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+          <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+          <script>
+            (function () {
+              var target = document.currentScript;
+              window.addEventListener('load', function () {
+                calendar.schedulingButton.load({
+                  url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ36qFYJ8ocyGBNYhVgvJXOLIu6KFnNDnkq0NJ0OzmdoDbJERbyF6bMOZmyVqNo6fJyVeYd01O8d?gv=true',
+                  color: '#039BE5',
+                  label: 'Book an Appointment',
+                  target,
+                });
+              });
+            })();
+          </script>
+        </div>
+      </section>
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -80,4 +110,3 @@
     <a href="contact.html" class="floating-button">Contact Us</a> 
 </body>
 </html>
-

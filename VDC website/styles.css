@@ -264,3 +264,109 @@ footer {
 }
 
 /* ALUMNI END */
+
+.contact {
+    margin-top: 100px;
+    padding: 5rem 9%;
+    background-color: #FFFFF0;
+    color: #132245;
+}
+
+.contact form {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #132245;
+    padding: 3rem;
+    border-radius: 1.6rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.contact form label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    color: #FEDE42;
+    font-weight: 500;
+}
+
+.contact form input,
+.contact form textarea {
+    width: 100%;
+    padding: 1.4rem;
+    margin-bottom: 2rem;
+    border: 2px solid #FEDE42;
+    border-radius: 1rem;
+    font-size: 1.6rem;
+    color: #132245;
+    background-color: #E9EDC8;
+    transition: 0.3s ease;
+}
+
+.contact form input:focus,
+.contact form textarea:focus {
+    border-color: #FF791F;
+    background-color: #FFFBEF;
+    outline: none;
+}
+
+.contact form button {
+    width: 100%;
+    padding: 1.6rem;
+    background-color: #FEDE42;
+    color: #132245;
+    font-weight: 600;
+    font-size: 1.8rem;
+    border-radius: 5rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.contact form button:hover {
+    background-color: #FF791F;
+    color: #FFFFF0;
+    border-color: #FEDE42;
+}
+
+.contact h2 {
+    text-align: center;
+    font-size: 3.2rem;
+    color: #132245;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00274D;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 200;
+ }
+ 
+ .calendar-container {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.book-meeting-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    background-color: #FFFFF0;
+}
+
+.booking-button-container {
+    transform: scale(1.5); /* makes the button bigger */
+    text-align: center;
+}
