@@ -6,6 +6,7 @@ class Atom {
         this.vy = vy;
         this.radius = radius;
         this.mass = mass;
+        this.m = mass;
     }
 
     updatePosition(timeStep, boxWidth, boxHeight, boundaryType) {
@@ -320,12 +321,19 @@ document.getElementById('startSimulation').addEventListener('click', function ()
         handleCollisions();
 
         // update particles position
+
+        
         particles.forEach(atom => {
-            atom.updatePosition(timeStep, userBoxWidth, userBoxHeight, boundaryType);
-            const radiusOffset = atom.radius / 100;
-            atom.x = Math.max(-userBoxWidth / 2 + radiusOffset, Math.min(userBoxWidth / 2 - radiusOffset, atom.x));
-            atom.y = Math.max(-userBoxHeight / 2 + radiusOffset, Math.min(userBoxHeight / 2 - radiusOffset, atom.y));
-        });
+    atom.updatePosition(timeStep, userBoxWidth, userBoxHeight, boundaryType);
+    
+    if (!boundaryType) {
+        const radiusOffset = atom.radius / 100;
+        atom.x = Math.max(-userBoxWidth / 2 + radiusOffset, Math.min(userBoxWidth / 2 - radiusOffset, atom.x));
+        atom.y = Math.max(-userBoxHeight / 2 + radiusOffset, Math.min(userBoxHeight / 2 - radiusOffset, atom.y));
+    }
+});
+
+        
 
         draw();
         lastTimestamp = timestamp;
