@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "deepseek-r1:1.5b"
+MODEL_NAME = "llama2:chat"
 
 # training the model with pre-loaded information
 CONTEXT = """
