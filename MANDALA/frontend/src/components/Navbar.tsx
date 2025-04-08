@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ShoppingCart, CircleUserRound } from 'lucide-react';
+import { useUser, useClerk, SignInButton } from '@clerk/clerk-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isProfileClicked, setIsProfileClicked] = useState(false)
+  const [isProfileClicked, setIsProfileClicked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const { isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +32,11 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleSignOut = async () => {
+    await signOut();
+    setIsProfileClicked(false);
+  };
+
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
       isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
@@ -49,22 +57,38 @@ const Navbar = () => {
                 isScrolled ? 'text-black' : 'text-white'
               }`}>Shop</a>
               <div className="relative" ref={dropdownRef}>
-                <button className= {`relative hover:text-blue-200 transition-colors ${
-                  isScrolled ? 'text-black' : 'text-white'}`}
-                  onClick={() => setIsProfileClicked(!isProfileClicked)}>
-                  <CircleUserRound size={30} />
-                </button>
-                {isProfileClicked && (
-                  <div className="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg min-w-max z-50 text-lg">
-
-                  <div className="absolute -top-2 right-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
-              
-                  <ul className="py-2 text-gray-500">
-                    <li className="px-4 py-2 hover:bg-gray-100"><a href="#">View Profile</a></li>
-                    <li className="px-4 py-2 hover:bg-gray-100"><a href="#">Order History</a></li>
-                    <li className="px-4 py-2 hover:bg-gray-100"><a href="#">Sign Out</a></li>
-                  </ul>
-                </div>
+                {isSignedIn ? (
+                  <>
+                    <button className={`relative hover:text-blue-200 transition-colors ${
+                      isScrolled ? 'text-black' : 'text-white'}`}
+                      onClick={() => setIsProfileClicked(!isProfileClicked)}>
+                      <CircleUserRound size={30} />
+                    </button>
+                    {isProfileClicked && (
+                      <div className="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg min-w-max z-50 text-lg">
+                        <div className="absolute -top-2 right-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
+                    
+                        <div className="px-4 py-2 border-b">
+                          <p className="font-medium text-gray-900">{user?.fullName || user?.primaryEmailAddress?.emailAddress}</p>
+                        </div>
+                    
+                        <ul className="py-2 text-gray-500">
+                          <li className="px-4 py-2 hover:bg-gray-100"><a href="#">View Profile</a></li>
+                          <li className="px-4 py-2 hover:bg-gray-100"><a href="#">Order History</a></li>
+                          <li className="px-4 py-2 hover:bg-gray-100">
+                            <button onClick={handleSignOut} className="text-left w-full">Sign Out</button>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <SignInButton mode="modal">
+                    <button className={`relative hover:text-blue-200 transition-colors ${
+                      isScrolled ? 'text-black' : 'text-white'}`}>
+                      <CircleUserRound size={30} />
+                    </button>
+                  </SignInButton>
                 )}
               </div>
               <a href="#cart" className={`relative hover:text-blue-200 transition-colors ${
@@ -99,6 +123,20 @@ const Navbar = () => {
             <a href="#gallery" className="block px-3 py-2 text-black font-bold hover:text-red-600">Gallery</a>
             <a href="/gallery" className="block px-3 py-2 text-black font-bold hover:text-red-600">Product</a>
             <a href="#contact" className="block px-3 py-2 bg-red-600 text-white font-bold rounded-md">Contact Us</a>
+            {isSignedIn ? (
+              <button 
+                onClick={handleSignOut}
+                className="block w-full text-left px-3 py-2 text-black font-bold hover:text-red-600"
+              >
+                Sign Out
+              </button>
+            ) : (
+              <SignInButton mode="modal">
+                <button className="block w-full text-left px-3 py-2 text-black font-bold hover:text-red-600">
+                  Sign In
+                </button>
+              </SignInButton>
+            )}
             <a href="#cart" className="block px-3 py-2 text-black font-bold hover:text-red-600">
               Cart (0)
             </a>
