@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ShoppingCart, CircleUserRound } from 'lucide-react';
 import { useUser, useClerk, SignInButton } from '@clerk/clerk-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ const Navbar = () => {
   const { signOut } = useClerk();
   const location = useLocation();
   const isGalleryPage = location.pathname === '/gallery';
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +39,10 @@ const Navbar = () => {
   const handleSignOut = async () => {
     await signOut();
     setIsProfileClicked(false);
+  };
+
+  const handleCartClick = () => {
+    navigate('/checkout');
   };
 
   return (
@@ -97,7 +101,7 @@ const Navbar = () => {
               </div>
               <a href="#cart" className={`relative hover:text-blue-200 transition-colors ${
                 isScrolled ? 'text-black' : 'text-white'
-              }`}>
+              }`} onClick={handleCartClick}>
                 <ShoppingCart size={30} />
                 <span className="absolute -top-2 -right-2 bg-blue-200 text-gray-800 text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   0
@@ -141,7 +145,7 @@ const Navbar = () => {
                 </button>
               </SignInButton>
             )}
-            <a href="#cart" className="block px-3 py-2 text-black font-bold hover:text-red-600">
+            <a href="#cart" className="block px-3 py-2 text-black font-bold hover:text-red-600" onClick={handleCartClick}>
               Cart (0)
             </a>
           </div>
