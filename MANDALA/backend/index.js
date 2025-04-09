@@ -6,6 +6,7 @@ const xss = require('xss-clean');
 const mongoSanitize = require('express-mongo-sanitize');
 const compression = require('compression');
 const cors = require('cors');
+require('dotenv').config();
 
 // set security HTTP headers
 app.use(helmet());
@@ -26,6 +27,9 @@ app.use(compression());
 // enable cors
 app.use(cors());
 app.options('*', cors());
+
+// Routers
+app.use('/user', require('./routes/users'));
 
 const server = app.use(express.json());
 
