@@ -43,9 +43,16 @@ st.title("Employee Weekly Schedule Viewer")
 
 # Example test data (one working day, rest zeros)
 example_input = {
-    "Bob": "00001111111100001111" + "0" * (96 - 20) + "1" * 96 * 6,  # Works 1am-3am, 4am-5am Monday, rest fully working
-    "Alice": "1" * 96 + "0" * 96 * 6,  # Works all Monday
-    "Charlie": "0" * 96 * 3 + "1" * 96 + "0" * 96 * 3,  # Works only Thursday
+    "Bob": "0" * 56 + "1111" + "1111" + "1111" + "1111" + "0",
+    "Alice": "0" * 56 + "1111" + "1111" + "0000" + "0111" + "0",    
+    "Charlie": "0" * 56 + "1111" + "1111" + "1111" + "1100",
+    "Robert": "0" * 56,
+    "Justin": "0" * 56 + "1" * 4 + "0",
+    "Juan": "0" * 56 + "0000" + "0000" + "1111" + "1111" + "0",
+    "Patrick": "0" * 56 + "0000" + "1111" + "0000" + "0000",
+    "John": "0" * 56 + "1111" + "0000" + "0000" + "0000",
+    "Francis": "0" * 56 + "0000" + "0000" + "0000" + "1111" + "0",
+    "Xavier": "0" * 56 + "0111" + "1100" + "0000" + "0000",
 }
 
 st.sidebar.header("Controls")
