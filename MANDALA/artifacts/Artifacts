@@ -10,9 +10,9 @@ First steps taken:
 	-Develop a wireframe for the main pages.
 	-Prepare a content plan: what texts, images, and videos will be needed.
 
-Technology stack: HTML, CSS, JS, PHP, MongoDB, NodeJS.
+Technology stack: React, CSS, PHP, MongoDB, NodeJS.
 
-
+ 
 Epic #1: Prototyping and page design.
 
 	Task MND-00001: Create Page Layouts 		- 3 story points.
@@ -94,7 +94,7 @@ Epic #3: Backend Development.
 	Task MND-20007: Make logo clickable		- 1 story point.
 		Clicking on logo should move user on a main page.
 
-	Task MND-20008: Make menu for sending messaage extendable to make it easier for reading. 	- 1 story point
+	Task MND-20008: Make menu for sending message extendable to make it easier for reading. 	- 1 story point
 
 	Tasks MND-20009: Add/Edit/Delete Mandalas – Upload and manage artworks with images, descriptions, and pricing. - 5 story points
 
@@ -102,17 +102,24 @@ Epic #3: Backend Development.
 
         Task  MND-20011: Add Cart System – Customers can add/remove Mandalas before purchasing   - 5 story points.
 
-        Tasks MND-20012: Add Checkout System – Secure payment processing using Stripe/Razorpay. - 5 story points.
+        Tasks MND-20012: Add Checkout System – Secure payment processing using Stripe/Razorpay. - 3 story points.
 
         Tasks MND-20013: Add Order History – Customers can view their past purchases.           - 5 story points.
 
         Tasks MND-20014: Wishlist – Allows users to save their favorite Mandalas for future purchases.  - 5 story points.
 
-        Tasks MND-10014: Custom Orders – Customers can submit special requests for personalized Mandala art.    - 5 story points.
+        Tasks MND-20015: Custom Orders – Customers can submit special requests for personalized Mandala art.    - 5 story points.
 
-	Tasks MND-10015: Add Earnings Dashboard – View total sales and revenue generated in Admin Panel.	- 5 story points.
+	Tasks MND-20016: Add Earnings Dashboard – View total sales and revenue generated in Admin Panel.	- 5 story points.
 
-	Tasks MND-10016: Add Custom Order Requests Management – Accept or decline personalized Mandala design requests in Admin Panel. - 5 story points
+	Tasks MND-20017: Add Custom Order Requests Management – Accept or decline personalized Mandala design requests in Admin Panel. - 5 story points.
+
+	Tasks MND-20018: Investigate User Account Systems - Research and investigate possible methods to handle user account creation and management, starting with Firebase authentication. - 2 story points.
+
+	Tasks MND-20019: Add User Login/Account System - Implement Firebase auth or other service to handle user account creation and management. - 3 story points.
+
+	Tasks MND-20020: Complete Checkout Page - Integrate Stripe payment component with the database to handle user carts and product information (price, quantity, etc.). - 2 Story Points.
+
 
 Epic #4: Testing & Integration.
 
