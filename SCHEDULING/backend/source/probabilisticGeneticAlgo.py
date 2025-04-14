@@ -8,7 +8,21 @@ import random
 ## we are collecting the intervals for which the individual
 ## is available. Implemented by Yan
 def island_collection(individual):
+    new_individual = individual[:]
     islands = []
+
+    i = 0
+    while i < len(new_individual):
+        if new_individual[i] == 0:
+            start = i
+            while i < len(new_individual) and new_individual[i] == 0:
+                i += 1
+            end = i
+            if end - start >= 4:
+                islands.append((start, end))
+        else:
+            i += 1
+
     return islands
 
 def generate_block_availability():
@@ -28,7 +42,13 @@ def generate_block_availability():
 ## to work in the time slot [x,y]. This will be implemented
 ## by Yan
 def compute_zero_density(x, y, nurseDict):
-    return 0
+    total_zeros = 0
+    num_nurses = len(nurseDict)
+    for availability in nurseDict.values():
+        segment = availability[x:y+1]
+        total_zeros += segment.count('0')
+    total_slots = (y - x + 1) * num_nurses
+    return total_zeros / total_slots
 
 def compute_shift_coverage(master_schedule, nurses):
     num_slots = 160
