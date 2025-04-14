@@ -5,8 +5,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import StripeCheckoutForm from '../components/StripeCheckoutForm';
 
-// For debugging
-console.log('Checkout component loading...');
 
 // Load Stripe outside of component rendering to avoid recreating the Stripe object
 // The publishable key should be retrieved from an environment variable
@@ -25,7 +23,7 @@ const Checkout = () => {
   });
 
   useEffect(() => {
-    console.log('Creating payment intent...');
+
     // Get API URL from environment variable
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     
@@ -36,14 +34,12 @@ const Checkout = () => {
       body: JSON.stringify({ items: [{ id: 'xl-tshirt', amount: 1000 }] }),
     })
       .then((res) => {
-        console.log('Response received:', res.status);
         if (!res.ok) {
           throw new Error(`Server responded with status: ${res.status}`);
         }
         return res.json();
       })
       .then((data) => {
-        console.log('Client secret received:', data.clientSecret ? 'Yes' : 'No');
         if (!data.clientSecret) {
           throw new Error('No client secret received from server');
         }

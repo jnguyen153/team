@@ -3,8 +3,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const CheckoutCompletePage = () => {
-  // Immediately log when this component renders
-  console.log('CheckoutCompletePage rendering');
   
   return (
     <div className="min-h-screen flex flex-col">

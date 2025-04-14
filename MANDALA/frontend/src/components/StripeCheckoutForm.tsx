@@ -18,13 +18,11 @@ const StripeCheckoutForm = () => {
     // Use a simpler URL without hash navigation
     const origin = window.location.origin;
     const returnUrl = `${origin}/checkout_complete`;
-    console.log("Setting return URL to:", returnUrl);
     setRedirectUrl(returnUrl);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Payment form submitted");
 
     if (!stripe || !elements) {
       console.log("Stripe not loaded yet");
@@ -35,10 +33,8 @@ const StripeCheckoutForm = () => {
     setIsLoading(true);
     setMessage(null);
     
-    console.log("Processing payment with redirect URL:", redirectUrl);
 
     try {
-      console.log("Calling Stripe.confirmPayment");
       // Use Stripe's standard redirect approach but with a simple URL
       const { error } = await stripe.confirmPayment({
         elements,
