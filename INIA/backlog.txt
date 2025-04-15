@@ -1,0 +1,42 @@
+Backlog List for Updating Inia Biosciences Website:
+
+1. Add comforting/text images surrounding psoriasis. Clear Mission statement that appeals to clients and investors.    
+	- Small designs, incorporate their logo/mascot.
+
+2. Add high level explanation of bioelectronics and how they apply to the Vest 
+
+3. info geared towards investors, talk about pharmaceutical industry implications of this product being in the market, why this research itself is important
+	- highlight their research, applications, empirical findings, How they've used grants, future plans with investment, Community impact
+	- what do they do to fulfill their mission
+	- their main goal is psoriasis but they plan to application of research 
+
+4. information directly about the mechanism that the vest uses, (this could be proprietary)
+	- diagrams 
+	- animation
+
+5. understanding of the 3 minutes of pulses from the wearble. (probably part of the info for 4)
+
+6. provide bigger clickable links to other areas from main page
+	- Probably how Galvani and JR automation did it.
+	- navbar is large and clear 
+
+7. enliven selected subpage(s) with monthly updates
+	- announcements/news page 
+	- currently you have to scroll a bit
+	- sort by date or by type of news. clickable timeline ?
+
+8. Identify data subject to change to allow for updates and innovation in the industry.
+	- investments and partners
+	- new innovations in research, impact those innovations have
+	- the team
+	- social medias 
+
+9. Search bar to pull up data things from around the site
+	- JR automation has a good implementation
+
+10. Contact Us
+	- requested we split up incoming emails from investors/talent and patients/dermatologists
+
+11. Ecommerce 
+	- add a link that leads users where they can buy the vest
+	- if they aren't directly selling it, patients can have their own link to contact to inquire about the process 
