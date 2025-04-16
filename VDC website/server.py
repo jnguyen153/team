@@ -8,7 +8,7 @@ CORS(app)
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL_NAME = "llama2:chat"
 
-# training the model with pre-loaded information
+# Static company context
 CONTEXT = """
 You are an AI assistant for the Venture Development Center (VDC) at UMass Boston.
 
@@ -42,9 +42,9 @@ Location & Contact:
 - Located in Wheatley Hall, 3rd Floor, 100 Morrissey Blvd, Boston, MA 02125-3393.
 - Email: vdc@umb.edu | Phone: (617) 287-6070
 
-Always answer questions using this information. Do not guess. If something is not mentioned here, say you don’t have that information.
+You are a helpful assistant that always answers clearly and directly using ONLY the above information.
+If something is not mentioned, say "That information is not available."
 """
-
 
 @app.route("/", methods=["GET"])
 def home():
@@ -62,28 +62,35 @@ def chat():
         if not user_prompt:
             return jsonify({"error": "No prompt provided"}), 400
 
-        # ✅ Combine context with user prompt
+        # Construct the full prompt with instruction
         full_prompt = f"""
-    {CONTEXT}
+{CONTEXT}
 
-    Answer the following question clearly and concisely using ONLY the information above. Do not explain your reasoning. Do not restate the context. Do not use filler language. Just answer the question.
+Use the format below to respond:
 
-    Q: {user_prompt}
-    A:"""
+Q: {user_prompt}
+A: [Respond in 1–2 clear sentences. Do not repeat the question. Do not add reasoning.]
+"""
 
-
-
-        # 🔁 Send to Ollama
+        # Call Ollama API with temperature control
         response = requests.post(OLLAMA_URL, json={
             "model": MODEL_NAME,
             "prompt": full_prompt,
+            "temperature": 0.3,
             "stream": False
         })
 
-        print("Ollama raw response:", response.text)
+        print("Full prompt sent:\n", full_prompt)
+        print("Ollama raw response:\n", response.text)
 
         ollama_response = response.json()
-        ai_text = ollama_response.get("response", "")
+        raw_response = ollama_response.get("response", "")
+
+        # Extract only the part after "A:"
+        if "A:" in raw_response:
+            ai_text = raw_response.split("A:")[-1].strip()
+        else:
+            ai_text = raw_response.strip()
 
         return jsonify({"response": ai_text})
 
