@@ -1,17 +1,18 @@
 import pandas as pd
 from datetime import timedelta, datetime
+import re
 import streamlit as st
 
 # === CONFIGURATION === #
-start_of_day = 12 * 4  # 2PM (in 15-minute blocks)
+start_of_day = 14 * 4  # 2PM
 end_of_day = 18 * 4    # 6PM
-day_range = [0]        # [0] for Monday; [0, 1] for Mon–Tue
+day_range = [0]        # 0 = Monday; [0, 1] = Monday–Tuesday
 
 # === DERIVED CONSTANTS === #
 blocks_per_day = 96
 length_of_day = end_of_day - start_of_day
 length_of_window = length_of_day * len(day_range)
-expected_binary_length = length_of_window * 2  # work + availability
+expected_binary_length = length_of_window * 2  # schedule + availability
 
 
 def binary_to_shift_times(binary_string, base_block_offset, unavailable=False):
@@ -38,7 +39,6 @@ def binary_to_shift_times(binary_string, base_block_offset, unavailable=False):
     if in_shift:
         end_time = current_time + timedelta(minutes=15)
         shifts.append(f"{shift_start.strftime('%H:%M')} - {end_time.strftime('%H:%M')}")
-
     return ', '.join(shifts)
 
 
@@ -72,19 +72,37 @@ def generate_availability(employees_dict):
     return pd.DataFrame(availability).T
 
 
-# === STREAMLIT UI === #
-st.set_page_config(layout="wide")
-st.title("Employee Schedule Viewer – Dynamic Time Window")
+def parse_nurse_schedule_format_flexible(text):
+    nurse_data = {}
+    entries = text.strip().split('--------------------------------------------------------------------------------')
+    for entry in entries:
+        lines = entry.strip().splitlines()
+        if len(lines) != 2:
+            continue
+        try:
+            name_avail, avail = re.split(r'\s*:\s*', lines[0], maxsplit=1)
+            name_work, work = re.split(r'\s*:\s*', lines[1], maxsplit=1)
+            nurse_name = re.sub(r" Availability.*", "", name_avail.strip())
+            binary_string = work.strip() + avail.strip()  # Work + Availability
+            nurse_data[nurse_name] = binary_string
+        except ValueError:
+            continue
+    return nurse_data
 
-st.sidebar.header("Controls")
-uploaded_file = st.sidebar.file_uploader("Upload a CSV with employee_name,binary_string", type="csv")
+
+# === STREAMLIT APP === #
+st.set_page_config(layout="wide")
+st.title("🩺 Nurse Schedule Viewer – Dynamic Time Window")
+
+st.sidebar.header("Upload Your Nurse Schedule Text File")
+uploaded_file = st.sidebar.file_uploader("Upload a .txt file", type="txt")
 
 if uploaded_file:
-    df = pd.read_csv(uploaded_file)
+    content = uploaded_file.read().decode("utf-8")
     input_data = {}
-    for _, row in df.iterrows():
-        name = row["employee_name"]
-        bits = row["binary_string"]
+    parsed = parse_nurse_schedule_format_flexible(content)
+
+    for name, bits in parsed.items():
         if len(bits) == expected_binary_length:
             input_data[name] = bits
         else:
@@ -95,12 +113,12 @@ if uploaded_file:
             schedule_df = generate_schedule(input_data)
             availability_df = generate_availability(input_data)
 
-            st.subheader("Work Schedule")
+            st.subheader("🗓️ Work Schedule")
             st.dataframe(schedule_df, use_container_width=True)
 
-            st.subheader("Availability")
+            st.subheader("🟢 Availability")
             st.dataframe(availability_df, use_container_width=True)
         else:
-            st.error("No valid employee data found in uploaded file.")
+            st.error("❌ No valid nurse data found.")
 else:
-    st.info(f"Upload a CSV with exactly {expected_binary_length} bits per employee (work + availability).")
+    st.info(f"Upload a nurse schedule .txt file with exactly {expected_binary_length} bits (schedule + availability) per nurse.")
