@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
 
-
-
-
 * {
   margin: 0;
   padding: 0;
@@ -67,16 +64,10 @@ nav a {
   border-bottom: 3px solid transparent;
 }
 
-
-
-
 nav a:hover, nav a.active {
   color: #FF791F;
   border-bottom: 3px solid #FEDE42;
 }
-
-
-
 
 hr {
   border: none;
@@ -84,9 +75,6 @@ hr {
   background-color: #f6250a;
   margin: 40px 0;
 }
-
-
-
 
 footer {
   background-color: #132245;
@@ -97,9 +85,6 @@ footer {
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
-
-
 .footer-content {
   display: flex;
   flex-wrap: wrap;
@@ -108,17 +93,11 @@ footer {
   margin: 0 auto;
 }
 
-
-
-
 .footer-section {
   flex: 1;
   min-width: 250px;
   margin: 1rem;
 }
-
-
-
 
 .footer-section h3 {
   font-size: 1.8rem;
@@ -126,31 +105,19 @@ footer {
   color: #FEDE42;
 }
 
-
-
-
 .footer-section p {
   font-size: 1.4rem;
   color: #E9EDC8;
 }
-
-
-
 
 .footer-section a {
   color: #E9EDC8;
   font-weight: 600;
 }
 
-
-
-
 .footer-section a:hover {
   color: #FEDE42;
 }
-
-
-
 
 .footer-section a i {
   font-size: 2.5rem;
@@ -158,23 +125,14 @@ footer {
   transition: transform 0.3s ease;
 }
 
-
-
-
 .footer-section a i:hover {
   transform: scale(1.9);
 }
-
-
-
 
 .dropdown {
   position: relative;
   display: inline-block;
 }
-
-
-
 
 .dropdown-content {
   position: absolute;
@@ -191,9 +149,6 @@ footer {
   margin: 0;
 }
 
-
-
-
 .dropdown-content a {
   display: block;
   padding: 10px;
@@ -203,23 +158,14 @@ footer {
   transition: background 0.3s ease-in-out;
 }
 
-
-
-
 .dropdown-content a:hover {
   background: #005A8B;
   color: #FEDE42;
 }
 
-
-
-
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
-
-
 
 .home {
   min-height: 100vh;
@@ -230,9 +176,6 @@ footer {
   gap: 8rem;
   background-color: #FFFFF0;
 }
-
-
-
 
 .home .home-content .home-header {
   font-size: 6rem;
@@ -246,17 +189,11 @@ footer {
   padding: 10px 0;
 }
 
-
-
-
 .home-content p {
   font-size: 2.6rem;
   margin-bottom: 2rem;
   color: #50403E;
 }
-
-
-
 
 .home-img img {
   width: 32vw;
@@ -265,15 +202,6 @@ footer {
   cursor: pointer;
   transition: 0.2s linear;
 }
-/* home end */
-
-
-
-
-/* about start */
-
-
-
 
 .about {
   text-align: right;
@@ -285,9 +213,6 @@ footer {
   gap: 8rem;
   background-color: #FFFFF0;
 }
-
-
-
 
 .about .about-content .about-header {
   font-size: 6rem;
@@ -301,17 +226,11 @@ footer {
   padding: 10px 0;
 }
 
-
-
-
 .about-content p {
   font-size: 2.6rem;
   margin-bottom: 2rem;
   color: #50403E;
 }
-
-
-
 
 .about-img img {
   width: 32vw;
@@ -320,15 +239,6 @@ footer {
   cursor: pointer;
   transition: 0.2s linear;
 }
-/* about end */
-
-
-
-
-/* entrepreneur start */
-
-
-
 
 .entrepreneur {
   min-height: 100vh;
@@ -339,9 +249,6 @@ footer {
   gap: 8rem;
   background-color: #FFFFF0;
 }
-
-
-
 
 .entrepreneur .entrepreneur-content .entrepreneur-header {
   font-size: 6rem;
@@ -355,17 +262,11 @@ footer {
   padding: 10px 0;
 }
 
-
-
-
 .entrepreneur-content p {
   font-size: 2.6rem;
   margin-bottom: 2rem;
   color: #50403E;
 }
-
-
-
 
 .entrepreneur-img img {
   width: 32vw;
@@ -374,16 +275,6 @@ footer {
   cursor: pointer;
   transition: 0.2s linear;
 }
-/* entrepreneur end */
-
-
-
-
-/* alumni start */
-
-
-/* alumni start */
-
 
 .alumni {
    min-height: 1vh;
@@ -393,7 +284,6 @@ footer {
    gap: 8rem;
    background-color: #FFFFF0;
 }
-
 
 .alumni .alumni-content .alumni-header {
    font-size: 6rem;
@@ -408,7 +298,6 @@ footer {
    padding: 10px 0;
 }
 
-
 .alumni-slider {
    height: 300px;
    margin: auto;
@@ -419,18 +308,15 @@ footer {
    overflow: hidden;
 }
 
-
 .alumni-slide-track{
    display: flex;
    width: calc(250px * 26);
    animation: scroll 40s linear infinite;
 }
 
-
 .alumni-slide-track:hover{
    animation-play-state: paused;
 }
-
 
 @keyframes scroll {
    0% {
@@ -441,7 +327,6 @@ footer {
    }
 }
 
-
 .alumni-slide{
    height: 200px;
    width: 250px;
@@ -451,17 +336,14 @@ footer {
    perspective: 100px;
 }
 
-
 .alumni-slide img {
    width: 100%;
    transition: transform 1s;
 }
 
-
 .alumni-slide img:hover{
    transform: translateZ(20px);
 }
-
 
 .alumni-slider::before,
 .alumni-slider::after {
@@ -473,12 +355,10 @@ footer {
    z-index: 2;
 }
 
-
 .alumni-slider::before {
    left: 0;
    top: 0;
 }
-
 
 .alumni-slider::after {
    right: 0;
@@ -486,21 +366,12 @@ footer {
    transform: rotateZ(180deg);
 }
 
-
-/* alumni end */
-
-
-
-
 .contact {
   margin-top: 100px;
   padding: 5rem 9%;
   background-color: #FFFFF0;
   color: #132245;
 }
-
-
-
 
 .contact form {
   max-width: 700px;
@@ -511,9 +382,6 @@ footer {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-
-
-
 .contact form label {
   display: block;
   margin-bottom: 1rem;
@@ -521,9 +389,6 @@ footer {
   color: #FEDE42;
   font-weight: 500;
 }
-
-
-
 
 .contact form input,
 .contact form textarea {
@@ -538,18 +403,12 @@ footer {
   transition: 0.3s ease;
 }
 
-
-
-
 .contact form input:focus,
 .contact form textarea:focus {
   border-color: #FF791F;
   background-color: #FFFBEF;
   outline: none;
 }
-
-
-
 
 .contact form button {
   width: 100%;
@@ -564,17 +423,11 @@ footer {
   border: 2px solid transparent;
 }
 
-
-
-
 .contact form button:hover {
   background-color: #FF791F;
   color: #FFFFF0;
   border-color: #FEDE42;
 }
-
-
-
 
 .contact h2 {
   text-align: center;
@@ -583,9 +436,6 @@ footer {
   margin-bottom: 3rem;
   font-weight: 700;
 }
-
-
-
 
 .floating-button {
   position: fixed;
@@ -608,9 +458,6 @@ footer {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-
-
-
 .book-meeting-section {
   display: flex;
   justify-content: center;
@@ -619,18 +466,11 @@ footer {
   background-color: #FFFFF0;
 }
 
-
-
-
 .booking-button-container {
-  transform: scale(1.5); /* makes the button bigger */
+  transform: scale(1.5); 
   text-align: center;
 }
 
-
-
-
-/* Make sure the section is wide and tall enough */
 .events-hero {
   position: relative;
   background: url('your-event-image.jpg') center/cover no-repeat;
@@ -651,9 +491,9 @@ footer {
   text-align: center;
 }
 .events-hero-overlay {
-  background-color: rgba(19, 34, 69, 0.7); /* dark overlay */
+  background-color: rgba(19, 34, 69, 0.7); 
   width: 5000px;
-  height: 755px;
+  height: 855px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -675,9 +515,6 @@ footer {
   margin-bottom: 2rem;
 }
 
-
-
-
 .calendar-overlay iframe {
   width: 800px;
   height: 500px;
@@ -685,13 +522,10 @@ footer {
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
-
-
-
 .contact-hero {
    position: relative;
    background: url('University-of-Massachusetts-Boston-–-University-Hall-exterior.jpg') center/cover no-repeat;
-   min-height: 80vh; /* or any height you want */
+   min-height: 80vh; 
    display: flex;
    align-items: center;
    justify-content: center;
@@ -703,19 +537,19 @@ footer {
    left: 0;
    width: 100%;
    height: 100%;
-   background: rgba(19, 34, 69, 0.7); /* dark semi-transparent overlay */
+   background: rgba(19, 34, 69, 0.7); 
    z-index: 1;
  }
  .contact-hero-content {
    position: relative;
    z-index: 2;
-   color: #fff; /* makes sure text is readable */
+   color: #fff; 
    max-width: 600px;
    width: 90%;
    margin: auto;
    padding: 2rem;
-   background-color: rgba(255, 255, 255, 0.05); /* optional light box */
-   backdrop-filter: blur(5px); /* optional frosted glass effect */
+   background-color: rgba(255, 255, 255, 0.05); 
+   backdrop-filter: blur(5px); 
    border-radius: 12px;
  }
   .contact-hero-content h1 {
@@ -753,7 +587,6 @@ footer {
   background-color: #001f4d;
 }
 
-
 .entrepreneur {
    display: flex;
    flex-wrap: wrap;
@@ -765,12 +598,10 @@ footer {
    border-radius: 1rem;
 }
 
-
 .entrepreneur-img {
    flex: 1 1 400px;
    text-align: center;
 }
-
 
 .entrepreneur-img img {
    width: 100%;
@@ -779,35 +610,30 @@ footer {
    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
-
 .entrepreneur-content {
    flex: 1 1 500px;
    max-width: 600px;
 }
 
-
 .entrepreneur-header {
    font-size: 2.5rem;
    margin-bottom: 1rem;
-   color: #fedf42; /* Updated to match the gold accent color */
+   color: #fedf42; 
 }
-
 
 .entrepreneur-header span {
-   color: #132245; /* Updated to match the dark blue accent color */
+   color: #132245; 
 }
-
 
 .entrepreneur-content p {
    font-size: 1.1rem;
    line-height: 1.7;
    margin-bottom: 1.2rem;
-   color: #132245; /* Updated to match the dark blue accent color */
+   color: #132245; 
 }
 
-
 .entrepreneur-content strong {
-   color: #b69f2d; /* Updated to match the gold accent color */
+   color: #b69f2d; 
 }
 
 
@@ -815,11 +641,9 @@ footer {
    display: block;
    margin-top: 1.5rem;
    font-style: italic;
-   color: #8a0707; /* Slight dark red for emphasis */
+   color: #8a0707; 
 }
 
-
-/* Responsive tweaks */
 @media (max-width: 768px) {
    .entrepreneur {
        flex-direction: column;
@@ -837,5 +661,3 @@ footer {
        text-align: center;
    }
 }
-
-
