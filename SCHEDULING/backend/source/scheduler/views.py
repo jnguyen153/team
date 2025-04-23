@@ -11,7 +11,7 @@ def admin_form_submission(request):
     if request.method == 'POST':
         body = json.loads(request.body)
         AdminSubmission.objects.create(data=body)
-        return JsonResponse({'status': 'admin form received'})
+        return JsonResponse({'status': 'admin form received'}, status = 201)
     return JsonResponse({'error': 'Only POST allowed'}, status=405)
 
 @csrf_exempt
@@ -35,19 +35,33 @@ def submit_schedule(request):
                 preferability=1  # default preferability = 1
             )
         
-        return JsonResponse({'status': 'schedule received'})
+        return JsonResponse({'status': 'schedule received'}, status = 201)
     return JsonResponse({'error': 'Only POST allowed'}, status=405)
 
 @csrf_exempt
 def update_parameters(request):
-    if request.method == "PUT":
+    if request.method == 'PUT':
         body = json.loads(request.body)
-        params = body.get("parameters", {})
-        EmployeeParameters.objects.create(
-            student_id=params.get('student_id', ''),
-            max_hours=params.get('max_hours', 20),
-            min_hours=params.get('min_hours', 5),
-            preferability=params.get('preferability', 1)
-        )
-        return JsonResponse({'status': 'parameters updated'})
+        params = body.get('parameters', {})
+        student_id=params.get('student_id', '')
+
+        if (student_id == ''):
+            return JsonResponse({'error': 'student_id is required'}, status=400)
+        
+
+        try:
+            # get the existing parameters
+            exisitng_params = EmployeeParameters.objects.get(student_id=student_id)
+            # update fields if provided in JSON 
+            if 'min' in params:
+                exisitng_params.min_hours = params.get('min')
+            if 'max' in params:
+                exisitng_params.max_hours = params.get('max')
+            if 'preferability' in params:
+                exisitng_params.preferability = params.get('preferability')
+            exisitng_params.save()
+            return JsonResponse({'status': 'Parameters updated'}, status=204)
+
+        except EmployeeParameters.DoesNotExist:
+            return JsonResponse({'error': 'student_id not found'}, status=404)
     return JsonResponse({'error': 'Only PUT allowed'}, status=405)
