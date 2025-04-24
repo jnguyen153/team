@@ -1007,3 +1007,93 @@ transition: all 0.5s ease-in-out;
   color: #000;
   text-decoration: underline;
 }
+
+.program-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.program-intro {
+  background-color: #FEDE42;
+  color: #132245;
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+.program-intro h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.program-intro h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.program-intro p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.program-benefits {
+  background-color: #FFFFF0;
+  color: #132245;
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+.program-benefits h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.program-benefits ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.program-benefits li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.program-benefits strong {
+  font-weight: bold;
+}
+
+.cta {
+  text-align: center;
+  padding: 40px;
+  background-color: #FEDE42;
+  color: #132245;
+  border-radius: 10px;
+}
+
+.cta h3 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.cta p {
+  font-size: 20px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.cta-button {
+  display: inline-block;
+  font-size: 18px;
+  background-color: #132245;
+  color: #FEDE42;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #1a3b5d;
+}
