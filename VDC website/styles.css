@@ -240,6 +240,12 @@ footer {
   transition: 0.2s linear;
 }
 
+
+/* entrepreneur start */
+
+
+
+
 .entrepreneur {
   min-height: 100vh;
   padding: 5rem 9%;
@@ -249,6 +255,9 @@ footer {
   gap: 8rem;
   background-color: #FFFFF0;
 }
+
+
+
 
 .entrepreneur .entrepreneur-content .entrepreneur-header {
   font-size: 6rem;
@@ -262,11 +271,17 @@ footer {
   padding: 10px 0;
 }
 
+
+
+
 .entrepreneur-content p {
   font-size: 2.6rem;
   margin-bottom: 2rem;
   color: #50403E;
 }
+
+
+
 
 .entrepreneur-img img {
   width: 32vw;
@@ -275,6 +290,119 @@ footer {
   cursor: pointer;
   transition: 0.2s linear;
 }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.entre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8rem;
+  background-color: #FFFFF0;
+}
+
+.entre .entre-content .entre-header {
+  font-size: 6rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #132245;
+  top: 0;
+  background-color: #FFFFF0;
+  z-index: 99;
+  padding: 10px 0;
+}
+
+.entre-content p {
+  font-size: 2.6rem;
+  color: #50403E;
+}
+
+.entre-img img {
+  width: 32vw;
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(0, 90, 139, 0.3);
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+
+.entre-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Teko', sans-serif;
+  background: #FFFFF0;
+  width: 100vw;
+}
+
+.wrapper{
+  width: 80%;
+  padding: 30px 0;
+  text-align: center;
+}
+
+.content {
+padding: 10%;
+}
+
+.content p {
+line-height: 1.5;
+}
+.main-content{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-row-gap: 15px;
+  grid-column-gap: 15px;
+}
+.main-content .box{
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 15px;
+  box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.15);
+  height: 350px;
+  overflow: hidden;    
+}
+.main-content .box::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  transition: all 0.3s ease-in-out;
+}
+.main-content .box:hover:before{
+  top: 0;
+  right: calc(100% - 5px);
+  z-index: 10;
+}
+.main-content .box img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.main-content .box .img-text {
+position: absolute;
+  display: flex;
+justify-content: center;
+align-items: center;
+background: rgba(255,255,255,0.9);
+width: 100%;
+height: 100%;
+top: 0;
+right: 100%;
+transition: all 0.5s ease-in-out;	
+}
+.main-content .box:hover .img-text{
+  top: 0;
+  right: 0;
+}
+
+/* entrepreneur end */
+
+
+/* -------------------Alumni Start----------------------- */
 
 .alumni {
    min-height: 1vh;
@@ -365,6 +493,12 @@ footer {
    top: 0;
    transform: rotateZ(180deg);
 }
+
+
+
+/* -------------------Alumni End----------------------- */
+
+
 
 .contact {
   margin-top: 100px;
@@ -588,78 +722,87 @@ footer {
 }
 
 .entrepreneur {
-   display: flex;
-   flex-wrap: wrap;
-   align-items: center;
-   justify-content: center;
-   gap: 2rem;
-   padding: 4rem 2rem;
-   background: #FFFFF0;
-   border-radius: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  background: #FFFFF0;
+  border-radius: 1rem;
 }
+
 
 .entrepreneur-img {
-   flex: 1 1 400px;
-   text-align: center;
+  flex: 1 1 400px;
+  text-align: center;
 }
+
 
 .entrepreneur-img img {
-   width: 100%;
-   max-width: 500px;
-   border-radius: 1rem;
-   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
+
 
 .entrepreneur-content {
-   flex: 1 1 500px;
-   max-width: 600px;
+  flex: 1 1 500px;
+  max-width: 600px;
 }
+
 
 .entrepreneur-header {
-   font-size: 2.5rem;
-   margin-bottom: 1rem;
-   color: #fedf42; 
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #0f0f0e; /* Updated to match the gold accent color */
 }
+
 
 .entrepreneur-header span {
-   color: #132245; 
+  color: #132245; /* Updated to match the dark blue accent color */
 }
+
 
 .entrepreneur-content p {
-   font-size: 1.1rem;
-   line-height: 1.7;
-   margin-bottom: 1.2rem;
-   color: #132245; 
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  color: #132245; /* Updated to match the dark blue accent color */
 }
 
+
 .entrepreneur-content strong {
-   color: #b69f2d; 
+  color: #b69f2d; /* Updated to match the gold accent color */
 }
 
 
 .entrepreneur-content em {
-   display: block;
-   margin-top: 1.5rem;
-   font-style: italic;
-   color: #8a0707; 
+  display: block;
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: #8a0707; /* Slight dark red for emphasis */
 }
 
+
+/* Responsive tweaks */
 @media (max-width: 768px) {
-   .entrepreneur {
-       flex-direction: column;
-       padding: 2rem 1rem;
-   }
+  .entrepreneur {
+      flex-direction: column;
+      padding: 2rem 1rem;
+  }
 
 
-   .entrepreneur-header {
-       font-size: 2rem;
-       text-align: center;
-   }
+  .entrepreneur-header {
+      font-size: 2rem;
+      text-align: center;
+  }
 
 
-   .entrepreneur-content {
-       text-align: center;
-   }
+  .entrepreneur-content {
+      text-align: center;
+  }
 }
 
 .lab-vacancies {
