@@ -271,9 +271,6 @@ footer {
 
 
 /* about start */
-
-
-
 /*
 .about {
   text-align: right;
@@ -358,14 +355,13 @@ footer {
 .about-icon2,
 .about-icon3,
 .about-icon4 {
-  position: absolute;  /* you move these manually */
+  position: absolute;
   width: 60px;
   height: 60px;
   z-index: 2;
   transition: transform 0.3s ease;
 }
 
-/* example: you choose these values */
 .about-icon1 { top: 350px; left:  950px; }
 .about-icon2 { top: 520px; left:  770px; }
 .about-icon3 { top: 700px; left:  550px; }
@@ -413,11 +409,8 @@ footer {
 
 
 
+
 /* entrepreneur start */
-
-
-
-
 .entrepreneur {
   min-height: 100vh;
   padding: 5rem 9%;
