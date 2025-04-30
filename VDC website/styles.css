@@ -1097,3 +1097,132 @@ transition: all 0.5s ease-in-out;
 .cta-button:hover {
   background-color: #1a3b5d;
 }
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.profile-photo img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 0; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.profile-info {
+  max-width: 600px;
+  width: 100%;
+  font-size: 1.9rem;  
+  line-height: 1.4;
+}
+
+.profile-info p {
+  font-size: 1.4rem;   
+  line-height: 1.8;
+  margin: 1 auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+.profile-buttons .btn {
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 0.6rem 1.6rem;
+  background-color: #132245;
+  color: #FEDE42;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.profile-buttons .btn:hover {
+  background-color: #FEDE42;  
+  color: #132245;             
+  cursor: pointer;
+}
+
+.application-form {
+  background: #FFFFF0;
+  padding: 3rem 1rem;
+}
+
+.form-container {
+  max-width: 800px;
+  margin: auto;
+  background: #FFFFF0;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.application-form h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #132245;
+}
+
+.application-form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.application-form input,
+.application-form textarea,
+.application-form select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.3rem;
+  border-radius: 6px;
+  border: 1px solid #FFFFF0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.application-form button {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #132245;
+  color: #FEDE42;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+.application-form button:hover {
+  background-color: #FEDE42;  
+  color: #132245;             
+  cursor: pointer;
+}
+
+.form-intro {
+  background-color: #FFFFF0;
+  color: #132245;
+  padding: 2rem;
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.form-intro h2 {
+  color: #132245;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.form-intro p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
