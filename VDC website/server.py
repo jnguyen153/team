@@ -8,6 +8,18 @@ CORS(app)
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL_NAME = "llama2:chat"
 
+VDC_KEYWORDS = [
+    "vdc", "venture development center", "umass boston", "umb", "wheatley hall",
+    "student entrepreneur", "step", "venture incubation program", "vip", 
+    "entrepreneur visa", "visa sponsorship", "cap-exempt", "h-1b", 
+    "dr. shubhro sen", "research facilities", "core research", "startup", 
+    "startups", "mentorship", "workshops", "incubation", "innovation", 
+    "company funding", "sqz", "pillpack", "kensho", "flywire", 
+    "lab space", "office space", "investors", "fundraising", 
+    "seed stage", "massachusetts", "support for entrepreneurs", 
+    "international founders", "job creation", "biotech", "tech companies"
+]
+
 # Static company context
 CONTEXT = """
 You are an AI assistant for the Venture Development Center (VDC) at UMass Boston.
@@ -61,6 +73,12 @@ def chat():
 
         if not user_prompt:
             return jsonify({"error": "No prompt provided"}), 400
+
+        if not any(keyword in user_prompt.lower() for keyword in VDC_KEYWORDS):
+            return jsonify({
+                "response": "I'm only trained to answer questions about the Venture Development Center (VDC) at UMass Boston."
+            })
+
 
         # Construct the full prompt with instruction
         full_prompt = f"""
