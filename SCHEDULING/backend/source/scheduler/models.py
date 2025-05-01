@@ -5,15 +5,18 @@ class AdminSubmission(models.Model):
     data = models.JSONField()
     submitted_at = models.DateTimeField(auto_now_add=True)
 
-class StudentSchedule(models.Model):
-    student_id = models.CharField(max_length=100)
-    schedule = models.JSONField()
-    submitted_at = models.DateTimeField(auto_now_add=True)
+class SavedSchedules(models.Model):
+    schedules = models.JSONField() # An array of all saved Schedules
 
 class Employee(models.Model):
     employee_id = models.CharField(max_length=100, primary_key=True)
     availability = models.JSONField()  # List of 7 strings, each BITS_PER_DAY length
     params = models.JSONField()
+    student_id = models.CharField(max_length=100)
+    schedule = models.JSONField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    email= models.CharField(max_length=100)
+    
 
     def generate_block_availability(self):
         availability = []
