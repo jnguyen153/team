@@ -9,7 +9,7 @@ class StudentSchedule(models.Model):
     student_id = models.CharField(max_length=100)
     schedule = models.JSONField()
     submitted_at = models.DateTimeField(auto_now_add=True)
-
+## 3 Parameters: max_hours (number), f1_student (boolean), priority (boolean)
 class Employee(models.Model):
     employee_id = models.CharField(max_length=100, primary_key=True)
     availability = models.JSONField()  # List of 7 strings, each BITS_PER_DAY length
