@@ -11,11 +11,16 @@ class SavedSchedules(models.Model):
 class Employee(models.Model):
     employee_id = models.CharField(max_length=100, primary_key=True)
     availability = models.JSONField()  # List of 7 strings, each BITS_PER_DAY length
-    params = models.JSONField()
+    params = models.JSONField()  
+    '''# params Will contain the following mappings: 
+    {'max_hours': int, 
+    'f1_status': bool, 
+    'priority': int}'''
     student_id = models.CharField(max_length=100)
     schedule = models.JSONField()
     submitted_at = models.DateTimeField(auto_now_add=True)
     email= models.CharField(max_length=100)
+    
     
 
     def generate_block_availability(self):

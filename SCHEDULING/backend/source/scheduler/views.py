@@ -35,22 +35,22 @@ def submit_schedule(request):
 def update_parameters(request):
     if request.method == 'PUT':
         body = json.loads(request.body)
-        new_params = body.get('parameters', {})
+        new_params = body.get('updates', {})
+        if (new_params == {}):
+            return JsonResponse({'error': 'update body is empty'}, status=400)
         student_id=new_params.get('student_id', '')
-
         if (student_id == ''):
             return JsonResponse({'error': 'student_id is required'}, status=400)
         try:
             # get the existing parameters
             exisitng_params = Employee.objects.get(student_id=student_id).params
-            # update fields if provided in JSON 
-            if 'max' in new_params:
+            # update mappings if provided in JSON request body
+            if 'max_hours' in new_params:
                 exisitng_params.max_hours = new_params.get('max')
-            """
-            if 'min' in params:
-                exisitng_params.min_hours = params.get('min')
-            if 'preferability' in params:
-                exisitng_params.preferability = params.get('preferability')"""
+            if 'f1_status' in new_params:
+                exisitng_params.f1_status = new_params.get('f1_status')
+            if 'priority' in new_params:
+                exisitng_params.priority = new_params.get('priority')
             exisitng_params.save()
             return JsonResponse({'status': 'Parameters updated'}, status=204)
         except Employee.DoesNotExist:
@@ -77,6 +77,6 @@ def save_schedule(request):
         body = json.loads(request.body)
         new_schedule = body.get('new_schedule')
         existing_data = SavedSchedules.objects.first()
-        new_schedule.schedules = 
+        # new_schedule.schedules = 
         return JsonResponse({'status': 'schedule successfully saved'})
     return JsonResponse({'error': 'Only PUT allowed'}, status=405)
