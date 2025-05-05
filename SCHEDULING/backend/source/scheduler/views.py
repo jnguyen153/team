@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime, timedelta
+import pytz
 import json
 from .models import AdminSubmission, Employee, SavedSchedules
 
@@ -22,22 +24,66 @@ def admin_form_submission(request):
         return JsonResponse({'status': 'admin form received'})
     return JsonResponse({'error': 'Only POST allowed'}, status=405)
 
+def convert_events_to_unavailability_matrix(events):
+    tz = pytz.timezone("America/New_York")
+    schedule = [[0] * 96 for _ in range(7)]  # 7 days × 96 blocks
+
+    def time_to_block(dt):
+        return dt.hour * 4 + dt.minute // 15
+
+    for e in events:
+        start_str = e.get("start")
+        end_str = e.get("end", "")
+
+        if not start_str:
+            continue
+
+        try:
+            start = datetime.fromisoformat(start_str).astimezone(tz)
+        except ValueError:
+            continue
+
+        if end_str:
+            try:
+                end = datetime.fromisoformat(end_str).astimezone(tz)
+            except ValueError:
+                end = start + timedelta(minutes=15)
+        else:
+            end = start + timedelta(minutes=15)
+
+        day = start.weekday()
+        start_block = max(0, min(time_to_block(start), 95))
+        end_block = max(0, min(time_to_block(end), 96))
+
+        for i in range(start_block, end_block):
+            schedule[day][i] = 1
+
+    return schedule
+
 @csrf_exempt
-def submit_schedule(request):
-    if request.method == 'POST':
-        body = json.loads(request.body)
-        student_id = body.get('student_id', '')
-        schedule_update = body.get('schedule', {})
-        if (student_id == ''):
-            return JsonResponse({'error': 'student_id is required'}, status=400)  
-        if (schedule_update == {}):
-            return JsonResponse('error': 'non-empty scheule is required', status=400)
-        try: 
-            existing_employee = Employee.object.get(student_id=student_id)
-            existing_employee.schedule = schedule_update
-        except Employee.DoesNotExist:
-            return JsonResponse({'error': 'student_id not found in database'}, status=404)
-    return JsonResponse({'error': 'Only POST allowed'}, status=405)
+def submit_availability(request):
+    if request.method != 'PUT':
+        return JsonResponse({'error': 'Only PUT allowed'}, status=405)
+
+    body = json.loads(request.body)
+    student = body.get("student", {})
+    events = body.get("events", [])
+    student_id = student.get("studentId")
+
+    if not student_id or not events:
+        return JsonResponse({'error': 'Missing studentId or events'}, status=400)
+
+    try:
+        employee = Employee.objects.get(student_id=student_id)
+    except Employee.DoesNotExist:
+        return JsonResponse({'error': 'Student not found in database'}, status=404)
+
+    bit_matrix = convert_events_to_unavailability_matrix(events)
+    employee.schedule = bit_matrix  # assumes you have a JSONField or TextField
+    employee.save()
+
+    return JsonResponse({'status': 'availability updated', 'studentId': student_id}, status=200)
+
 
 @csrf_exempt
 def update_parameters(request):
