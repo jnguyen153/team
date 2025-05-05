@@ -1,192 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <title>VDC Website</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>VDC Website</title>
 </head>
 <body>
-    <header>
-        <a href="index.html" class="logo"><img src= "vdc 2.png" alt="VDC logo"></a>
-        <nav>
-            <div class="dropdown">
-                <a href="#">Who We Are</a>
-                <div class="dropdown-content">
-                    <a href="placeholder.html">Team</a>
-                    <a href="placeholder.html">Companies</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <a href="#">What We Offer</a>
-                <div class="dropdown-content">
-                    <a href="placeholder.html">Core Research Facilities</a>
-                    <a href="placeholder.html">Entrepreneur Visa Sponsorship</a>
-                    <a href="studentEntreProg.html">Student Entrepreneur Program</a>
-                    <a href="placeholder.html">Venture Incubation Program</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <a href="vacancies.html">Lab Vacancies</a>
-            </div>
-            <div class="dropdown">
-                <a href="events.html">Events</a>
-            </div>
-            <div class="dropdown">
-                <a href="apply.html">Apply</a>
-                </div>
-            <div class="dropdown">
-                <a href="contact.html">Contact Us</a>
-            </div>
-        </nav>
-    </header>
-    
-    <div class="form-intro">
-        <h2>Apply Now</h2>
-        <p>
-            If you are looking to join a vibrant community of entrepreneurial talent focused on bringing solutions to market, please complete the application below. Applications are reviewed on a rolling basis.
-        </p>
-        <p>
-            Our member companies are early-stage startups specializing in life sciences and technology. All companies in our niche are invited to apply. While the VDC is located on the campus of UMass Boston, you do not need to have a current or prior connection to UMass Boston or the University of Massachusetts system to join the VDC.
-        </p>
-        <p>
-            Once we have reviewed your application, we will contact you to schedule a meeting. We work collaboratively with applicants to evaluate whether we are a match for each other.
-        </p>
+  <header>
+    <a href="index.html" class="logo"><img src="vdc 2.png" alt="VDC logo" /></a>
+    <nav>
+      <div class="dropdown">
+        <a href="#">Who We Are</a>
+        <div class="dropdown-content">
+          <a href="placeholder.html">About</a>
+          <a href="placeholder.html">Team</a>
+          <a href="placeholder.html">Companies</a>
+          <a href="placeholder.html">Contact</a>
+          <a href="placeholder.html">Learnings</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#">What We Offer</a>
+        <div class="dropdown-content">
+          <a href="placeholder.html">Core Research Facilities</a>
+          <a href="placeholder.html">Entrepreneur Visa Sponsorship</a>
+          <a href="placeholder.html">Student Entrepreneur Program</a>
+          <a href="placeholder.html">Venture Incubation Program</a>
+        </div>
+      </div>
+      <div class="dropdown"><a href="placeholder.html">Lab Vacancies</a></div>
+      <div class="dropdown"><a href="events.html">Events</a></div>
+      <div class="dropdown"><a href="contact.html">Contact Us</a></div>
+    </nav>
+  </header>
+
+  <section class="apply-hero">
+    <div class="apply-hero-overlay">
+      <div class="apply-hero-content">
+        <h1>VDC Application Form</h1>
+        <p>Please complete the form below to apply to the VDC program.</p>
+
+        <form action="https://formsubmit.co/h3nriquebarcelos@gmail.com" method="POST" enctype="multipart/form-data">
+          <h2>Personal & Contact Information</h2>
+          <label>Name (First Name, Last Name)</label>
+          <input type="text" name="Name" required />
+
+          <label>Email</label>
+          <input type="email" name="Email" required />
+
+          <label>Phone Number</label>
+          <input type="tel" name="Phone Number" />
+
+          <label>Your University, Degree, Date Awarded/Expected</label>
+          <input type="text" name="University Info" />
+
+          <label>Your LinkedIn Profile</label>
+          <input type="url" name="LinkedIn Profile" />
+
+          <label>Where Are You Currently Located?</label>
+          <input type="text" name="Current Location" />
+
+          <label>Do you wish to participate in the Global Entrepreneur in Residence program?</label>
+          <select name="GEIR Participation">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Unsure">Unsure</option>
+          </select>
+
+          <h2>Company Information</h2>
+          <label>Company Name</label>
+          <input type="text" name="Company Name" />
+
+          <label>Company Website</label>
+          <input type="url" name="Company Website" />
+
+          <label>Current Company Financing</label>
+          <input type="text" name="Company Financing" />
+
+          <label>Have you raised funding? If yes, provide details. If no, explain how you're funding your startup.</label>
+          <textarea name="Funding Details"></textarea>
+
+          <label>Size of Your Team</label>
+          <select name="Team Size">
+            <option value="1-2">1–2</option>
+            <option value="3-5">3–5</option>
+            <option value="6-10">6–10</option>
+            <option value="11+">11+</option>
+          </select>
+
+          <label>Co-Founder Roles (Names, roles, and brief work experience)</label>
+          <textarea name="Co-Founders"></textarea>
+
+          <label>Unique Value Proposition</label>
+          <textarea name="Unique Value Proposition"></textarea>
+
+          <label>Market Prospects</label>
+          <textarea name="Market Prospects"></textarea>
+
+          <label>Traction (Prototype, pilot, customers, etc.)</label>
+          <textarea name="Traction"></textarea>
+
+          <label>Business Model (How the business generates revenue)</label>
+          <textarea name="Business Model"></textarea>
+
+          <label>Next Major Milestones</label>
+          <textarea name="Next Major Milestones"></textarea>
+
+          <label>How Can We Help You Grow Your Company?</label>
+          <textarea name="VDC Support"></textarea>
+
+          <h2>Long-Form Responses (500 words or less each)</h2>
+          <label>Briefly Describe Your Product Or Technology And Value Proposition</label>
+          <textarea name="Product Description"></textarea>
+
+          <label>Briefly Describe Your Potential Target Market</label>
+          <textarea name="Target Market"></textarea>
+
+          <label>Traction To Date (Funding, employees, customers, milestones)</label>
+          <textarea name="Traction To Date"></textarea>
+
+          <label>Competitive Advantage (Founder experience, IP, specialization)</label>
+          <textarea name="Competitive Advantage"></textarea>
+
+          <label>Value Added Potential For University Faculty And Students</label>
+          <textarea name="Value to University"></textarea>
+
+          <label>Potential Impact For The Commonwealth Of Massachusetts</label>
+          <textarea name="Massachusetts Impact"></textarea>
+
+          <h2>Final Submission</h2>
+          <label>How Did You Hear About the VDC?</label>
+          <select name="Referral Source">
+            <option value="">Select One</option>
+            <option value="University Referral">University Referral</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Friend or Colleague">Friend or Colleague</option>
+            <option value="Web Search">Web Search</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <label>CV/Resume Upload</label>
+          <input type="file" name="Resume" />
+
+          <label>Other Document Uploads (Business Plan, Pitch Deck, etc.)</label>
+          <input type="file" name="Additional Documents" multiple />
+
+          <label>Any Questions?</label>
+          <textarea name="Questions"></textarea>
+
+          <!-- Hidden FormSubmit Inputs -->
+          <input type="hidden" name="_subject" value="VDC Application Form Submission" />
+          <input type="hidden" name="_next" value="http://127.0.0.1:5500/index.html" />
+
+          <button type="submit">Submit Application</button>
+        </form>
+      </div>
     </div>
-    
-
-    <section class="application-form">
-        <div class="form-container">
-            <h2>GEIR Application Form</h2>
-            <form>
-                <label for="name">Name*</label>
-                <input type="text" id="name" name="name" placeholder="First and Last Name" required>
-    
-                <label for="email">Email*</label>
-                <input type="email" id="email" name="email" placeholder="example@example.com" required>
-    
-                <label for="phone">Phone Number*</label>
-                <input type="tel" id="phone" name="phone" placeholder="(000) 000-0000" required>
-    
-                <label for="university">Your University, Degree, Date Awarded/Expected*</label>
-                <input type="text" id="university" name="university" required>
-    
-                <label for="linkedin">Your LinkedIn Profile*</label>
-                <input type="url" id="linkedin" name="linkedin" required>
-    
-                <label for="location">Where Are You Currently Located?*</label>
-                <input type="text" id="location" name="location" required>
-    
-                <label for="participate">Do you wish to participate in the Global Entrepreneur in Residence program?*</label>
-                <select id="participate" name="participate" required>
-                    <option value="">Please Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-    
-                <label for="company">Company Name*</label>
-                <input type="text" id="company" name="company" required>
-    
-                <label for="website">Company Website*</label>
-                <input type="url" id="website" name="website" required>
-    
-                <label for="funding">Current Company Financing*</label>
-                <input type="text" id="funding" name="funding" required>
-    
-                <label for="funding-details">Funding Details*</label>
-                <textarea id="funding-details" name="funding-details" rows="3" required></textarea>
-    
-                <label for="team-size">Size of Your Team*</label>
-                <input type="number" id="team-size" name="team-size" required>
-    
-                <label for="cofounders">Co-Founder Roles*</label>
-                <textarea id="cofounders" name="cofounders" rows="3" required></textarea>
-    
-                <label for="value">Unique Value Proposition*</label>
-                <textarea id="value" name="value" rows="3" required></textarea>
-    
-                <label for="market">Market Prospects*</label>
-                <textarea id="market" name="market" rows="3" required></textarea>
-    
-                <label for="traction">Traction*</label>
-                <textarea id="traction" name="traction" rows="3" required></textarea>
-    
-                <label for="model">Business Model*</label>
-                <textarea id="model" name="model" rows="3" required></textarea>
-    
-                <label for="milestones">Next Major Milestones*</label>
-                <textarea id="milestones" name="milestones" rows="3" required></textarea>
-    
-                <label for="help">How Can We Help You Grow Your Company?*</label>
-                <textarea id="help" name="help" rows="3" required></textarea>
-    
-                <label for="product">Briefly Describe Your Product Or Technology (500 words or less)*</label>
-                <textarea id="product" name="product" rows="5" required></textarea>
-    
-                <label for="target">Briefly Describe Your Potential Target Market*</label>
-                <textarea id="target" name="target" rows="5" required></textarea>
-    
-                <label for="traction-date">Traction To Date?*</label>
-                <textarea id="traction-date" name="traction-date" rows="5" required></textarea>
-    
-                <label for="advantage">Competitive Advantage*</label>
-                <textarea id="advantage" name="advantage" rows="5" required></textarea>
-    
-                <label for="university-value">Value Added Potential For University Faculty And Students*</label>
-                <textarea id="university-value" name="university-value" rows="5" required></textarea>
-    
-                <label for="impact">Potential Impact For The Commonwealth Of Massachusetts*</label>
-                <textarea id="impact" name="impact" rows="5" required></textarea>
-    
-                <label for="referral">How Did You Hear About the VDC?*</label>
-                <select id="referral" name="referral" required>
-                    <option value="">Please Select</option>
-                    <option value="social">Social Media</option>
-                    <option value="event">Event</option>
-                    <option value="referral">Referral</option>
-                </select>
-    
-                <label for="resume">CV/Resume Upload*</label>
-                <input type="file" id="resume" name="resume" required>
-    
-                <label for="docs">Additional Documents (Optional)</label>
-                <input type="file" id="docs" name="docs" multiple>
-    
-                <label for="questions">Any Questions?</label>
-                <textarea id="questions" name="questions" rows="3"></textarea>
-    
-                <button type="submit">Submit Application</button>
-            </form>
-        </div>
-    </section>
-    
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Address</h3>
-                <p>Venture Development Center</p>
-                <p>UMass Boston, Wheatley Hall</p>
-                <p>100 Morrissey Blvd, Boston, MA 02125-3393</p>
-            </div>
-            <div class="footer-section">
-                <h3>Phone</h3>
-                <p>(617) 287-6070</p>
-            </div>
-            <div class="footer-section">
-                <h3>Email</h3>
-                <p><a href="mailto:vdc@umb.edu">vdc@umb.edu</a></p>
-            </div>
-            <div class="footer-section">
-                <a href="https://www.facebook.com/pages/Venture-Development-Center-UMass-Boston/140489986060643"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://x.com/umassvdc"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="https://www.youtube.com/@umassvdc"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://www.instagram.com/umassvdc/"><i class="fa-brands fa-instagram"></i></a>
-            </div>
-        </div>
-    </footer>
-    <a href="contact.html" class="floating-button">Contact Us</a> 
+  </section>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Address</h3>
+        <p>Venture Development Center</p>
+        <p>UMass Boston, Wheatley Hall</p>
+        <p>100 Morrissey Blvd, Boston, MA 02125-3393</p>
+      </div>
+      <div class="footer-section">
+        <h3>Phone</h3>
+        <p>(617) 287-6070</p>
+      </div>
+      <div class="footer-section">
+        <h3>Email</h3>
+        <p><a href="mailto:vdc@umb.edu">vdc@umb.edu</a></p>
+      </div>
+      <div class="footer-section">
+        <a href="https://www.facebook.com/pages/Venture-Development-Center-UMass-Boston/140489986060643"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://x.com/umassvdc"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://www.youtube.com/@umassvdc"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.instagram.com/umassvdc/"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
-

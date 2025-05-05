@@ -1285,3 +1285,68 @@ transition: all 0.5s ease-in-out;
   margin-bottom: 1rem;
   line-height: 1.5;
 }
+
+.apply-hero {
+  position: relative;
+  background: url('vertical.jpg') center/cover no-repeat;
+  min-height: 320vh; /* or any height you want */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ .apply-hero-overlay {
+  position: absolute;
+  padding: 8rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(19, 34, 69, 0.7); /* dark semi-transparent overlay */
+  z-index: 1;
+}
+.apply-hero-content {
+  position: relative;
+  z-index: 2;
+  color: #fff; /* makes sure text is readable */
+  max-width: 600px;
+  width: 90%;
+  margin: auto;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.05); /* optional light box */
+  backdrop-filter: blur(5px); /* optional frosted glass effect */
+  border-radius: 12px;
+}
+ .apply-hero-content h1 {
+ text-align: center;
+ margin-bottom: 0.5rem;
+}
+.apply-hero-content p {
+ text-align: center;
+ margin-bottom: 1.5rem;
+ color: #fff;
+}
+.apply-hero form {
+ display: flex;
+ flex-direction: column;
+ gap: 1rem;
+}
+.apply-hero input,
+.apply-hero textarea {
+ padding: 0.75rem;
+ border: 1px solid #ccc;
+ border-radius: 10px;
+ font-size: 1rem;
+ width: 100%;
+}
+.apply-hero button {
+ background-color: #003366;
+ color: white;
+ padding: 0.75rem;
+ border: none;
+ border-radius: 10px;
+ cursor: pointer;
+ transition: background 0.3s ease;
+}
+.apply-hero button:hover {
+ background-color: #001f4d;
+}
