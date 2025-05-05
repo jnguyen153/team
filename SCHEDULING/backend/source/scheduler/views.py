@@ -9,8 +9,16 @@ def get_schedules(request):
 @csrf_exempt
 def admin_form_submission(request):
     if request.method == 'POST':
-        body = json.loads(request.body)
-        AdminSubmission.objects.create(data=body)   
+        body=json.loads(request.body)
+        students=body.get('listofstudents')
+        for key in students:
+            Employee.objects.create(
+                employee_id= key.get('student_id')
+                student_id= key.get('student_id')
+                email=key.get('student_email')
+            )
+        '''body = json.loads(request.body)
+        AdminSubmission.objects.create(data=body)'''
         return JsonResponse({'status': 'admin form received'})
     return JsonResponse({'error': 'Only POST allowed'}, status=405)
 
