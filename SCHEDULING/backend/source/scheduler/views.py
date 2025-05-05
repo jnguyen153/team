@@ -84,7 +84,6 @@ def submit_availability(request):
 
     return JsonResponse({'status': 'availability updated', 'studentId': student_id}, status=200)
 
-
 @csrf_exempt
 def update_parameters(request):
     if request.method == 'PUT':
@@ -116,8 +115,7 @@ def get_schedules(request):
     if request.method == 'GET':
         data = SavedSchedules.object.first()
         return JsonResponse({'status': 'schedules request successful', 'data': data}, status=200)
-    return JsonResponse({'error': 'Only GET allowed'}, status=405)
-                        
+    return JsonResponse({'error': 'Only GET allowed'}, status=405)                
 
 @csrf_exempt
 def generate_schedule(request):
