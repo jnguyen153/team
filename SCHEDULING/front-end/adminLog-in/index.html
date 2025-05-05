@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>Student Scheduling - Log In</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+    <div id="login_Box">
+        <h1>Login</h1>
+        <label for="username">Username: </label>
+        <input type="text" id ="username" placeholder="type your username">
+        <label for="password">Password: </label>
+        <input type="password" id="password" placeholder="type your password">
+        <button id="confirmButton" onclick="signIn()">Sign in</button>
+        <div class="g_id_signin"
+              data-type="standard">
+        </div>
+        
+    </div>  
+
+    <div id = "g_id_onload"
+            data-client_id="554277204276-195mhsiv0b5id7b6mmmguvtt1eekjc7a.apps.googleusercontent.com"
+            data-callback="handleCredentialResponse">
+    </div> 
+
+    
+
+    <script src="index.js"></script>
+</body>
+</html>

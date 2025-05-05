@@ -1,0 +1,53 @@
+body{
+    background-image: linear-gradient(to right, rgb(12, 173, 184), rgb(26, 94, 162), rgb(153, 14, 192));
+    font-family: 'Arial', 'Georgia', 'Serif';
+}
+
+#login_Box {
+    position: fixed; 
+    top: 18%; 
+    left: 30%; 
+    width: 500px; 
+    height: 400px; 
+
+    display: flex; 
+    flex-direction: column; 
+    background-color: white; 
+    padding: 5%; 
+    gap: 4%; 
+    border: black 2px solid; 
+} 
+
+input {
+    width: 60%;
+    height: 5%;  
+    border: none; 
+    outline: none; 
+    border-bottom: 2px black solid; 
+    margin-bottom: 5%; 
+} 
+
+input:focus {
+    border-bottom: 3px solid transparent; 
+    border-image: linear-gradient(to right, rgb(12, 173, 184), rgb(26, 94, 162), rgb(153, 14, 192));
+    border-image-slice: 1;
+    outline: none; 
+} 
+
+/* .g_id_signin {
+    
+} */
+
+#confirmButton {
+    width: 20%;
+    height: 10%;  
+    border-radius: 25px; 
+    background: black;
+    color: white;
+    border: white solid 2px; 
+} 
+
+#confirmButton:hover {
+    background: linear-gradient(to right, rgb(12, 173, 184), rgb(26, 94, 162), rgb(153, 14, 192));
+    cursor: pointer; 
+}
