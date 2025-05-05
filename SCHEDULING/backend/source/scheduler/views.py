@@ -10,19 +10,20 @@ def get_schedules(request):
 
 @csrf_exempt
 def admin_form_submission(request):
-    if request.method == 'POST':
-        body=json.loads(request.body)
-        students=body.get('listofstudents')
-        for key in students:
-            Employee.objects.create(
-                employee_id= key.get('student_id')
-                student_id= key.get('student_id')
-                email=key.get('student_email')
-            )
-        '''body = json.loads(request.body)
-        AdminSubmission.objects.create(data=body)'''
-        return JsonResponse({'status': 'admin form received'})
-    return JsonResponse({'error': 'Only POST allowed'}, status=405)
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Only POST allowed'}, status=405)
+    body=json.loads(request.body)
+    students=body.get('listofstudents')
+    for key in students:
+        Employee.objects.create(
+            employee_id= key.get('student_id')
+            student_id= key.get('student_id')
+            email=key.get('student_email')
+        )
+    '''body = json.loads(request.body)
+    AdminSubmission.objects.create(data=body)'''
+    return JsonResponse({'status': 'admin form received'})
+    
 
 def convert_events_to_unavailability_matrix(events):
     tz = pytz.timezone("America/New_York")
@@ -86,29 +87,30 @@ def submit_availability(request):
 
 @csrf_exempt
 def update_parameters(request):
-    if request.method == 'PUT':
-        body = json.loads(request.body)
-        new_params = body.get('updates', {})
-        if (new_params == {}):
-            return JsonResponse({'error': 'update body is empty'}, status=400)
-        student_id=new_params.get('student_id', '')
-        if (student_id == ''):
-            return JsonResponse({'error': 'student_id is required'}, status=400)
-        try:
-            # get the existing parameters
-            exisitng_params = Employee.objects.get(student_id=student_id).params
-            # update mappings if provided in JSON request body
-            if 'max_hours' in new_params:
-                exisitng_params.max_hours = new_params.get('max')
-            if 'f1_status' in new_params:
-                exisitng_params.f1_status = new_params.get('f1_status')
-            if 'priority' in new_params:
-                exisitng_params.priority = new_params.get('priority')
-            exisitng_params.save()
-            return JsonResponse({'status': 'Parameters updated'}, status=204)
-        except Employee.DoesNotExist:
-            return JsonResponse({'error': 'student_id not found in database'}, status=404)
-    return JsonResponse({'error': 'Only PUT allowed'}, status=405)
+    if request.method != 'PUT':
+        return JsonResponse({'error': 'Only PUT allowed'}, status=405)
+    
+    body = json.loads(request.body)
+    new_params = body.get('updates', {})
+    if (new_params == {}):
+        return JsonResponse({'error': 'update body is empty'}, status=400)
+    student_id=new_params.get('student_id', '')
+    if (student_id == ''):
+        return JsonResponse({'error': 'student_id is required'}, status=400)
+    try:
+        # get the existing parameters
+        exisitng_params = Employee.objects.get(student_id=student_id).params
+        # update mappings if provided in JSON request body
+        if 'max_hours' in new_params:
+            exisitng_params.max_hours = new_params.get('max')
+        if 'f1_status' in new_params:
+            exisitng_params.f1_status = new_params.get('f1_status')
+        if 'priority' in new_params:
+            exisitng_params.priority = new_params.get('priority')
+        exisitng_params.save()
+        return JsonResponse({'status': 'Parameters updated'}, status=204)
+    except Employee.DoesNotExist:
+        return JsonResponse({'error': 'student_id not found in database'}, status=404)
 
 @csrf_exempt
 def get_schedules(request):
@@ -119,16 +121,17 @@ def get_schedules(request):
 
 @csrf_exempt
 def generate_schedule(request):
-    if request.method == 'GET':
-        return JsonResponse({'status': 'admin form received'})
-    return JsonResponse({'error': 'Only GET allowed'}, status=405)
-
+    if request.method != 'GET':
+        return JsonResponse({'error': 'Only GET allowed'}, status=405)
+    return JsonResponse({'status': 'admin form received'})
+    
 @csrf_exempt
 def save_schedule(request):
-    if request.method == 'PUT':
-        body = json.loads(request.body)
-        new_schedule = body.get('new_schedule')
-        existing_data = SavedSchedules.objects.first()
-        # new_schedule.schedules = 
-        return JsonResponse({'status': 'schedule successfully saved'})
-    return JsonResponse({'error': 'Only PUT allowed'}, status=405)
+    if request.method != 'PUT':
+        return JsonResponse({'error': 'Only PUT allowed'}, status=405)
+    body = json.loads(request.body)
+    new_schedule = body.get('new_schedule')
+    existing_data = SavedSchedules.objects.first()
+    # new_schedule.schedules = 
+    return JsonResponse({'status': 'schedule successfully saved'})
+    
