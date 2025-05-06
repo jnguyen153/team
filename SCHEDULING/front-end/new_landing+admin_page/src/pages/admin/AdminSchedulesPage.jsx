@@ -1,215 +1,262 @@
-import React, { useState, useEffect } from 'react';
-import { fetchSchedule, updateConstraints, generateSchedule, fetchStudents } from '../../services/api';
+// ──────────────────────────────────────────────────────────────
+// src/pages/admin/AdminSchedulesPage.jsx
+// ──────────────────────────────────────────────────────────────
+import React, { useEffect, useState } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin   from "@fullcalendar/daygrid";
+import timeGridPlugin  from "@fullcalendar/timegrid";
+import interaction     from "@fullcalendar/interaction";
 
-export default function AdminSchedulesPage() {
-  const [schedule, setSchedule] = useState(null);
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [numberOfHours, setNumberOfHours] = useState(40);
-  const [numberOfEmployees, setNumberOfEmployees] = useState(2);
+const API = "http://localhost:4000";
 
-  // Add validation functions
-  const handleHoursChange = (e) => {
-    const value = Math.max(0, parseInt(e.target.value) || 0);
-    setNumberOfHours(value);
+/* ---------- 1. colour palette helper ---------- */
+const palette = [
+  "#2563EB", "#DC2626", "#059669", "#D97706",
+  "#9333EA", "#14B8A6", "#F43F5E", "#4B5563",
+];
+const colorFor = (() => {
+  const cache = {};
+  return (id) => {
+    if (!cache[id]) {
+      const idx = Object.keys(cache).length % palette.length;
+      cache[id] = palette[idx];
+    }
+    return cache[id];
   };
+})();
 
-  const handleEmployeesChange = (e) => {
-    const value = Math.max(0, parseInt(e.target.value) || 0);
-    setNumberOfEmployees(value);
-  };
+/* ---------- 2. helpers to map schedule <‑‑> UI ---------- */
+const toGrid = (schedule) => {
+  const grid = {};
+  schedule.entries.forEach((e) =>
+    e.events.forEach((ev) => {
+      const d   = new Date(ev.start);
+      const key = `${d.getHours()}-${d.getDay()}`;    // "14-1" (Mon 2 pm)
+      grid[key] = grid[key] || [];
+      grid[key].push(`${e.employee.firstName} ${e.employee.lastName}`.trim());
+    })
+  );
 
-  // Fetch initial data when the component mounts
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const [studentData, scheduleData] = await Promise.all([fetchStudents(), fetchSchedule()]);
-        setStudents(studentData);
-        setSchedule(scheduleData);
-      } catch (err) {
-        setError('Error loading data');
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
-
-  // Define the missing functions
-  async function handleSaveConstraints() {
-    try {
-      await updateConstraints({
-        numberOfHours,
-        numberOfEmployees,
-      });
-      alert('Constraints updated');
-    } catch (err) {
-      console.error('Error saving constraints', err);
-      setError('Error saving constraints');
-    }
-  }
-
-  async function handleGenerate() {
-    try {
-      setLoading(true);
-      await generateSchedule();
-      const data = await fetchSchedule();
-      setSchedule(data);
-    } catch (err) {
-      setError('Error generating schedule');
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function handleExportCSV() {
-    if (!schedule) {
-      alert('No schedule available to export');
-      return;
-    }
-    let csvContent = 'Time,Mon,Tue,Wed,Thu,Fri\n';
-    schedule.timeBlocks.forEach((block) => {
-      csvContent += `${block.hour}:00,${block.monStudents.join(' & ')},${block.tueStudents.join(' & ')},${block.wedStudents.join(' & ')},${block.thuStudents.join(' & ')},${block.friStudents.join(' & ')}\n`;
+  const rows=[];
+  for (let h=8; h<17; h++){
+    rows.push({
+      hour:h,
+      mon:grid[`${h}-1`]||[],
+      tue:grid[`${h}-2`]||[],
+      wed:grid[`${h}-3`]||[],
+      thu:grid[`${h}-4`]||[],
+      fri:grid[`${h}-5`]||[],
     });
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'final_schedule.csv';
-    link.click();
-    URL.revokeObjectURL(url);
   }
+  return rows;
+};
 
-  // Render the component
-  return (
+const rowsToEntries = (rows, employees) => {
+  const byName={};
+  employees.forEach(e=>{
+    const full=`${e.firstName} ${e.lastName}`.trim();
+    byName[full]=e;
+  });
+
+  const empEvents={};
+  rows.forEach(r=>{
+    Object.entries({1:r.mon,2:r.tue,3:r.wed,4:r.thu,5:r.fri})
+      .forEach(([dow,list])=>{
+        list.forEach(name=>{
+          const emp=byName[name];
+          if(!emp) return;
+          const start=new Date();
+          start.setHours(r.hour,0,0,0);
+          const diff=(dow-start.getDay()+7)%7;
+          start.setDate(start.getDate()+diff);
+          const end=new Date(start.getTime()+60*60*1000);
+
+          empEvents[emp.employeeId]=empEvents[emp.employeeId]||{
+            employee:emp, events:[]
+          };
+          empEvents[emp.employeeId].events.push({
+            start:start.toISOString(), end:end.toISOString()
+          });
+        });
+      });
+  });
+  return Object.values(empEvents);
+};
+
+/* ---------- 3. component ---------- */
+export default function AdminSchedulesPage() {
+  /* state */
+  const [employees, setEmployees] = useState([]);
+  const [rows      , setRows]      = useState([]);
+  const [fcEvents  , setFcEvents ] = useState([]);
+  const [showCal   , setShowCal ]  = useState(true);
+
+  /* controls */
+  const [hours, setHours] = useState(120);
+  const [staff, setStaff] = useState(2);
+  const [k    , setK    ] = useState(3);
+
+  /* load distinct employees (sidebar) */
+  useEffect(()=>{
+    fetch(`${API}/schedules/`)
+      .then(r=> r.ok? r.json():[])
+      .then(sch=>{
+        const uniq={};
+        sch.forEach(s=>s.entries.forEach(e=>uniq[e.employee.employeeId]=e.employee));
+        setEmployees(Object.values(uniq));
+      })
+      .catch(()=>setEmployees([]));
+  },[]);
+
+  /* -------------- actions -------------- */
+  const generateSchedules = () => {
+    const qs = new URLSearchParams({
+      employee_ids: employees.map(e=>e.employeeId).join(","),
+      total_master_schedule_hours: hours,
+      num_schedules_desired: k,
+    });
+    fetch(`${API}/generate-schedules/?${qs.toString()}`)
+      .then(r=> r.ok? r.json():[])
+      .then(schedules=>{
+        if(!schedules.length){ alert("No schedules returned."); return; }
+        const best=schedules[0];
+        setRows(toGrid(best));
+
+        /* build FullCalendar events with colour */
+        const fc = best.entries.flatMap((entry)=>
+          entry.events.map(ev=>({
+            title:`${entry.employee.firstName} ${entry.employee.lastName}`,
+            start:ev.start,
+            end  :ev.end,
+            color:colorFor(entry.employee.employeeId),
+          }))
+        );
+        setFcEvents(fc);
+      })
+      .catch(()=>alert("Backend not reachable – generation failed"));
+  };
+
+  const saveSchedule = () => {
+    if(!rows.length) return;
+
+    const entries = rowsToEntries(rows, employees);
+    const body    = { comment:"Saved from UI", entries };
+
+    fetch(`${API}/save-schedule/`,{
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify(body),
+    })
+      .then(r=>{ if(!r.ok) throw new Error(); return r.json(); })
+      .then(()=>alert("Schedule saved to DB"))
+      .catch(()=>alert("Save failed"));
+  };
+
+  /* -------------- render -------------- */
+  return(
     <div className="container-fluid p-4">
-      <div className="row mb-4">
-        <div className="col-12">
-          <h2 className="mb-4">Weekly Assignment Schedule</h2>
-          {error && <div className="alert alert-danger">{error}</div>}
-          {loading && <div className="alert alert-info">Loading...</div>}
-        </div>
-      </div>
+      <h2 className="mb-3">Admin – Schedules</h2>
 
       <div className="row">
-        {/* Student Sidebar */}
+        {/* ⬅︎ sidebar */}
         <div className="col-md-3 mb-4">
           <div className="card">
-            <div className="card-header">
-              <h3 className="card-title mb-0">Students</h3>
-            </div>
-            <div className="card-body p-0">
-              <div className="table-responsive">
-                <table className="table table-hover mb-0">
-                  <thead className="table-light">
-                    <tr>
-                      <th>Name</th>
-                      <th>Max Hours</th>
-                      <th>Int'l</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {students.map((stu) => (
-                      <tr key={stu.id}>
-                        <td>{stu.name}</td>
-                        <td>{stu.maxHours}</td>
-                        <td>{stu.isInternational ? 'Yes' : 'No'}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="card-footer">
-              <a href="/admin/students" className="btn btn-secondary w-100">
-                Manage Students
-              </a>
-            </div>
+            <div className="card-header">Employees ({employees.length})</div>
+            <ul className="list-group list-group-flush" style={{maxHeight:400,overflowY:"auto"}}>
+              {employees.map(e=>(
+                <li key={e.employeeId} className="list-group-item">
+                  <span className="badge me-2" style={{
+                    backgroundColor:colorFor(e.employeeId)
+                  }}>&nbsp;</span>
+                  {e.firstName} {e.lastName}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Main Schedule Area */}
+        {/* ➡︎ main */}
         <div className="col-md-9">
           <div className="card">
-            <div className="card-header">
-              <div className="d-flex flex-wrap align-items-center gap-2">
-                <div className="d-flex align-items-center">
-                  <label className="me-2">Number of Hours:</label>
-                  <input
-                    type="number"
-                    value={numberOfHours}
-                    onChange={handleHoursChange}
-                    className="form-control form-control-sm"
-                    style={{ width: '80px' }}
-                    min="0"
-                  />
-                </div>
-                <div className="d-flex align-items-center">
-                  <label className="me-2">Number of Employees:</label>
-                  <input
-                    type="number"
-                    value={numberOfEmployees}
-                    onChange={handleEmployeesChange}
-                    className="form-control form-control-sm"
-                    style={{ width: '80px' }}
-                    min="0"
-                  />
-                </div>
-                <div className="d-flex gap-2">
-                  <button
-                    onClick={handleSaveConstraints}
-                    className="btn btn-sm btn-secondary"
-                  >
-                    Save Constraints
-                  </button>
-                  <button
-                    onClick={handleGenerate}
-                    className="btn btn-sm btn-primary"
-                  >
-                    Generate Schedule
-                  </button>
-                  <button
-                    onClick={handleExportCSV}
-                    className="btn btn-sm btn-success"
-                  >
-                    Export CSV
-                  </button>
-                </div>
-              </div>
+            <div className="card-header d-flex flex-wrap align-items-center gap-2">
+              <label>
+                Hours/week
+                <input type="number" className="form-control form-control-sm ms-1"
+                       style={{width:90}} value={hours}
+                       onChange={e=>setHours(Number(e.target.value)||0)}/>
+              </label>
+              <label className="ms-3">
+                Employees/shift
+                <input type="number" className="form-control form-control-sm ms-1"
+                       style={{width:90}} value={staff}
+                       onChange={e=>setStaff(Math.max(1,Number(e.target.value)||1))}/>
+              </label>
+              <label className="ms-3">
+                Schedules wanted
+                <input type="number" className="form-control form-control-sm ms-1"
+                       style={{width:90}} value={k}
+                       onChange={e=>setK(Math.max(1,Number(e.target.value)||1))}/>
+              </label>
+
+              <button className="btn btn-sm btn-primary ms-3"
+                      onClick={generateSchedules}
+                      disabled={!employees.length}>
+                Generate
+              </button>
+              <button className="btn btn-sm btn-success ms-2"
+                      onClick={saveSchedule}
+                      disabled={!rows.length}>
+                Save
+              </button>
+              <button className="btn btn-sm btn-outline-secondary ms-auto"
+                      onClick={()=>setShowCal(s=>!s)}
+                      disabled={!rows.length}>
+                {showCal? "Show table" : "Show calendar"}
+              </button>
             </div>
+
             <div className="card-body">
-              {!schedule ? (
-                <p className="text-center text-muted">No schedule available yet.</p>
-              ) : (
-                <div className="table-responsive">
-                  <table className="table table-bordered table-hover">
-                    <thead className="table-light">
-                      <tr>
-                        <th>Time</th>
-                        <th>Mon</th>
-                        <th>Tue</th>
-                        <th>Wed</th>
-                        <th>Thu</th>
-                        <th>Fri</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {schedule.timeBlocks.map((block) => (
-                        <tr key={block.hour}>
-                          <td className="fw-bold">{block.hour}:00</td>
-                          <td>{block.monStudents.join(', ')}</td>
-                          <td>{block.tueStudents.join(', ')}</td>
-                          <td>{block.wedStudents.join(', ')}</td>
-                          <td>{block.thuStudents.join(', ')}</td>
-                          <td>{block.friStudents.join(', ')}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+              {!rows.length
+                ? <p className="text-muted">Generate a schedule to see it here.</p>
+                : showCal
+                  ? (
+                    <FullCalendar
+                      plugins={[dayGridPlugin,timeGridPlugin,interaction]}
+                      initialView="timeGridWeek"
+                      headerToolbar={{
+                        left:"prev,next today",
+                        center:"title",
+                        right:"dayGridMonth,timeGridWeek,timeGridDay"
+                      }}
+                      events={fcEvents}
+                      height="auto"
+                    />
+                  )
+                  : (
+                    <div className="table-responsive">
+                      <table className="table table-bordered">
+                        <thead className="table-light">
+                          <tr>
+                            <th>Time</th><th>Mon</th><th>Tue</th>
+                            <th>Wed</th><th>Thu</th><th>Fri</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {rows.map(r=>(
+                            <tr key={r.hour}>
+                              <td className="fw-bold">{r.hour}:00</td>
+                              <td>{r.mon.join(", ")}</td>
+                              <td>{r.tue.join(", ")}</td>
+                              <td>{r.wed.join(", ")}</td>
+                              <td>{r.thu.join(", ")}</td>
+                              <td>{r.fri.join(", ")}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )
+              }
             </div>
           </div>
         </div>

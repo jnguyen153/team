@@ -1,7 +1,7 @@
 // src/pages/student/StudentSchedulePage.jsx
 import React, { useState } from 'react';
 import ICAL from 'ical.js';
-import MyCalendar from './MyCalendar'; 
+import MyCalendar from './MyCalendar';
 
 function generateEmptyGrid() {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -14,7 +14,7 @@ function generateEmptyGrid() {
   });
   return grid;
 }
-
+   
 export default function StudentSchedulePage() {
   const [tempEvents, setTempEvents] = useState([
     { id: '1', title: 'Event 1', start: '2025-03-25', source: 'manual' },
@@ -26,15 +26,6 @@ export default function StudentSchedulePage() {
 
   const [icalFile, setIcalFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [studentId, setStudentId] = useState('');
-
-  // Function to validate student ID
-  const validateStudentId = (value) => {
-    const numericValue = value.replace(/[^0-9]/g, '');
-    return numericValue.slice(0, 8);
-  };
 
   function handleFileChange(e) {
     const file = e.target.files[0];
@@ -62,7 +53,7 @@ export default function StudentSchedulePage() {
             const expansion = icsEvent.iterator();
             let next;
             let count = 0;
-            const maxCount = 50; // limit expansions
+            const maxCount = 50;
             const duration = icsEvent.duration || icsEvent.endDate.subtractDate(icsEvent.startDate);
 
             while ((next = expansion.next()) && count < maxCount) {
@@ -92,13 +83,12 @@ export default function StudentSchedulePage() {
         });
 
         console.log('Parsed ICS Events:', newEvents);
-        // Merge these ICS events into FullCalendar
         setTempEvents((prev) => [...prev, ...newEvents]);
 
 
         const newBusy = { ...icalBusySlots };
         newEvents.forEach((evt) => {
-          const dayStr = new Date(evt.start).toString().split(' ')[0]; 
+          const dayStr = new Date(evt.start).toString().split(' ')[0];
 
         });
 
@@ -113,9 +103,44 @@ export default function StudentSchedulePage() {
   }
 
   function handleSave() {
-    console.log('Saving availability:', availabilityGrid);
-    alert('Availability saved (fake).');
+    const payload = {
+      student: {
+        firstName: 'Demo',
+        lastName: 'Demo',
+        studentId: '23123232'
+      },
+      events: tempEvents.map(evt => ({
+        id: evt.id,
+        title: evt.title,
+        start: evt.start,
+        end: evt.end || null,
+        source: evt.source,
+        editable: evt.editable ?? evt.source !== 'ics',
+      })),
+      generatedAt: new Date().toISOString()
+    };
+
+    fetch('http://localhost:4000/submit-availability/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to submit');
+        return res.json();
+      })
+      .then((data) => {
+        alert('Availability saved successfully!');
+        console.log('Response:', data);
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Failed to save availability.');
+      });
   }
+
 
   return (
     <div className="p-3">
@@ -127,73 +152,32 @@ export default function StudentSchedulePage() {
 
       <hr className="mt-4 mb-4" />
 
-      <div className="mt-4">
-        <h4>Student Information</h4>
-        <div className="row mb-3">
-          <div className="col-md-4">
-            <label htmlFor="firstName" className="form-label">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              className="form-control"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="col-md-4">
-            <label htmlFor="lastName" className="form-label">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              className="form-control"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="col-md-4">
-            <label htmlFor="studentId" className="form-label">Student ID</label>
-            <input
-              type="text"
-              id="studentId"
-              className="form-control"
-              value={studentId}
-              onChange={(e) => setStudentId(validateStudentId(e.target.value))}
-              maxLength={8}
-              pattern="[0-9]*"
-              inputMode="numeric"
-              required
-            />
-          </div>
+      <div className="mt-4 mb-4">
+        <h4 className="mb-3">Upload Class Schedule (.ics)</h4>
+        <p className="text-muted mb-3">
+          Upload your iCal file to automatically add your class times to the calendar (non-editable).
+        </p>
+        <div className="d-flex align-items-center gap-2">
+          <input
+            type="file"
+            accept=".ics"
+            onChange={handleFileChange}
+            className="form-control"
+            style={{ maxWidth: '300px' }}
+          />
+          <button
+            onClick={handleUploadIcal}
+            className="btn btn-primary"
+            disabled={!icalFile}
+          >
+            Submit iCal
+          </button>
         </div>
-
-        <div className="mt-4">
-          <p className="text-muted mb-3">
-            Upload your iCal file to automatically add your class times to the calendar (non-editable).
-          </p>
-          <div className="d-flex align-items-center gap-2">
-            <input
-              type="file"
-              accept=".ics"
-              onChange={handleFileChange}
-              className="form-control"
-              style={{ maxWidth: '300px' }}
-            />
-            <button
-              onClick={handleUploadIcal}
-              className="btn btn-primary"
-              disabled={!icalFile}
-            >
-              Submit iCal
-            </button>
+        {uploadStatus && (
+          <div className="alert alert-success mt-2" role="alert">
+            {uploadStatus}
           </div>
-          {uploadStatus && (
-            <div className="alert alert-success mt-2" role="alert">
-              {uploadStatus}
-            </div>
-          )}
-        </div>
+        )}
       </div>
 
       <button onClick={handleSave} className="btn btn-success">

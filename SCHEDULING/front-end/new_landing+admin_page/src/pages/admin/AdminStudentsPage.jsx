@@ -1,284 +1,249 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react";
+
+/* -------- API root (change for prod) -------- */
+const API = "http://localhost:4000";
+
+const numeric8 = (v) => v.replace(/[^0-9]/g, "").slice(0, 8);
 
 export default function AdminStudentsPage() {
-  const [students, setStudents] = useState([
-    {
-      id: '1',
-      firstName: 'Demo',
-      lastName: 'Student1',
-      studentId: 'S001',
-      isInternational: false,
-      maxHours: 15,
-      icalSubmitted: true,
-      priority: 3,
-      preferClassDays: false,
-    },
-    {
-      id: '2',
-      firstName: 'Demo',
-      lastName: 'Student2',
-      studentId: 'S002',
-      isInternational: true,
-      maxHours: 20,
-      icalSubmitted: false,
-      priority: 1,
-      preferClassDays: true,
-    },
-  ]);
-
-  const [newFirstName, setNewFirstName] = useState('');
-  const [newLastName, setNewLastName] = useState('');
-  const [newStudentId, setNewStudentId] = useState('');
-
-  const validateStudentId = (value) => {
-    // Only allow numeric values and limit to 8 digits
-    const numericValue = value.replace(/[^0-9]/g, '');
-    return numericValue.slice(0, 8);
-  };
-
-  const fetchStudents = async () => {
-    return students;
-  };
-
-  const updateStudent = async (studentId, updates) => {
-    setStudents((prevStudents) =>
-      prevStudents.map((student) =>
-        student.id === studentId ? { ...student, ...updates } : student
-      )
-    );
-  };
-
-  const createStudent = async (studentData) => {
-    const newStudent = {
-      id: Math.random().toString(36).substr(2, 9), // Generate a random ID
-      firstName: studentData.firstName,
-      lastName: studentData.lastName,
-      studentId: studentData.studentId,
-      isInternational: false,
-      maxHours: 0,
-      icalSubmitted: false,
-      priority: 1,
-      preferClassDays: false,
-    };
-    setStudents((prevStudents) => [...prevStudents, newStudent]);
-    return newStudent;
-  };
-
-  const deleteStudent = async (studentId) => {
-    setStudents((prevStudents) =>
-      prevStudents.filter((student) => student.id !== studentId)
-    );
-  };
+  const [students, setStudents] = useState([]);
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [sid, setSid] = useState("");
+  const [statusMsg, setStatusMsg] = useState("");
 
   useEffect(() => {
-    loadStudents();
+    fetch(`${API}/schedules/`)
+      .then((r) => (r.ok ? r.json() : []))
+      .then((schedules) => {
+        const uniq = {};
+        schedules.forEach((sch) =>
+          sch.entries.forEach((e) => {
+            const id = e.employee.employeeId;
+            uniq[id] = {
+              id,
+              studentId: id,
+              firstName: e.employee.firstName,
+              lastName: e.employee.lastName,
+              isInternational: false,
+              maxHours: 0,
+              priority: 0,
+              synced: true, // already in DB
+            };
+          })
+        );
+        setStudents(Object.values(uniq));
+      })
+      .catch(() => {}); // ignore if backend down
   }, []);
 
-  async function loadStudents() {
-    try {
-      const data = await fetchStudents();
-      setStudents(data);
-    } catch (err) {
-      console.error('Error loading students:', err);
-    }
-  }
-
-  async function handleAddStudent(e) {
+  /* ---------- add row locally ---------- */
+  const handleAdd = (e) => {
     e.preventDefault();
-    try {
-      await createStudent({
-        firstName: newFirstName,
-        lastName: newLastName,
-        studentId: newStudentId,
-      });
-      // Clear input fields after adding
-      setNewFirstName('');
-      setNewLastName('');
-      setNewStudentId('');
-    } catch (err) {
-      console.error('Error adding student:', err);
-    }
-  }
+    setStatusMsg("");                           // clear old toast
 
-  async function handleDeleteStudent(studentId) {
-    if (window.confirm('Are you sure you want to delete this student?')) {
-      try {
-        await deleteStudent(studentId);
-      } catch (err) {
-        console.error('Error deleting student:', err);
-      }
-    }
-  }
+    const row = {
+      id: Date.now().toString(),
+      studentId: sid,
+      firstName: first.trim(),
+      lastName: last.trim(),
+      isInternational: false,
+      maxHours: 0,
+      priority: 0,
+      synced: false,                            // pending
+    };
+    setStudents((prev) => [...prev, row]);
+    setFirst("");
+    setLast("");
+    setSid("");
+  };
 
-  async function handleInternationalChange(studentId, value) {
-    const isInternational = value === 'Yes';
-    const currentStu = students.find((s) => s.id === studentId);
-    let newMaxHours = currentStu?.maxHours || 0;
+  const patch = (id, obj) =>
+    setStudents((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, ...obj } : s))
+    );
 
-    if (isInternational && newMaxHours > 20) {
-      newMaxHours = 20;
-    }
+  const fireUpdateAPI = (stu) => {
+    fetch(`${API}/update-parameters/`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        updates: [
+          {
+            student_id: stu.studentId,
+            max_hours: stu.maxHours,
+            f1_status: stu.isInternational,
+            priority: stu.priority,
+          },
+        ],
+      }),
+    }).catch(() => console.log("update-parameters offline"));
+  };
 
-    try {
-      await updateStudent(studentId, { isInternational, maxHours: newMaxHours });
-    } catch (err) {
-      console.error('Error updating student:', err);
-    }
-  }
+  const submitNew = () => {
+    const pending = students.filter((s) => !s.synced);
+    if (!pending.length) return alert("No new students to submit.");
 
-  async function handleMaxHoursChange(studentId, newHours) {
-    const currentStu = students.find((s) => s.id === studentId);
-    const isInternational = currentStu?.isInternational || false;
-    let hours = Number(newHours) || 0;
+    const idsJustSent = pending.map((p) => p.studentId);
 
-    if (isInternational) {
-      hours = Math.min(20, Math.max(0, hours));
-    } else {
-      hours = Math.min(40, Math.max(0, hours));
-    }
+    const body = {
+      listofstudents: pending.map((s) => ({
+        student_id: s.studentId,
+        student_email: `${s.studentId}@umb.edu`,
+      })),
+    };
 
-    try {
-      await updateStudent(studentId, { maxHours: hours });
-    } catch (err) {
-      console.error('Error updating max hours:', err);
-    }
-  }
-
-  async function handlePriorityChange(studentId, newPriority) {
-    const priority = Math.max(1, Math.min(5, Number(newPriority))); // Restrict to 1-5
-    try {
-      await updateStudent(studentId, { priority });
-    } catch (err) {
-      console.error('Error updating priority:', err);
-    }
-  }
-
-  async function handlePreferClassDaysChange(studentId, checked) {
-    try {
-      await updateStudent(studentId, { preferClassDays: checked });
-    } catch (err) {
-      console.error('Error updating prefer class days:', err);
-    }
-  }
+    fetch(`${API}/admin-form/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error();
+        /* mark only those rows we posted */
+        setStudents((prev) =>
+          prev.map((s) =>
+            idsJustSent.includes(s.studentId) ? { ...s, synced: true } : s
+          )
+        );
+        setStatusMsg("✅ New students saved!");
+      })
+      .catch(() => setStatusMsg("⚠︎ Could not reach backend."));
+  };
 
   return (
     <div className="p-3">
-      <h2>Manage Students</h2>
+      <h2>Manage Students</h2>
 
-      {/* Form to Add New Student */}
-      <div className="mb-3">
-        <h3>Add New Student</h3>
-        <form onSubmit={handleAddStudent}>
-          <label htmlFor="newFirstName" className="me-2">
-            First Name:
-          </label>
+      {/* add form */}
+      <form className="row g-2 align-items-end mb-3" onSubmit={handleAdd}>
+        <div className="col-sm-3">
+          <label className="form-label">First</label>
           <input
-            id="newFirstName"
-            type="text"
-            value={newFirstName}
-            onChange={(e) => setNewFirstName(e.target.value)}
+            className="form-control"
+            value={first}
+            onChange={(e) => setFirst(e.target.value)}
             required
-            className="me-2"
           />
-          <label htmlFor="newLastName" className="me-2">
-            Last Name:
-          </label>
+        </div>
+        <div className="col-sm-3">
+          <label className="form-label">Last</label>
           <input
-            id="newLastName"
-            type="text"
-            value={newLastName}
-            onChange={(e) => setNewLastName(e.target.value)}
+            className="form-control"
+            value={last}
+            onChange={(e) => setLast(e.target.value)}
             required
-            className="me-2"
           />
-          <label htmlFor="newStudentId" className="me-2">
-            Student ID:
-          </label>
+        </div>
+        <div className="col-sm-3">
+          <label className="form-label">Student ID</label>
           <input
-            id="newStudentId"
-            type="text"
-            value={newStudentId}
-            onChange={(e) => setNewStudentId(validateStudentId(e.target.value))}
-            required
-            className="me-2"
+            className="form-control"
+            value={sid}
+            onChange={(e) => setSid(numeric8(e.target.value))}
             maxLength={8}
-            pattern="[0-9]*"
             inputMode="numeric"
+            required
           />
-          <button type="submit" className="btn btn-sm btn-primary">
-            Add
-          </button>
-        </form>
-      </div>
+        </div>
+        <div className="col-sm-3">
+          <button className="btn btn-primary w-100">Add (local)</button>
+        </div>
+      </form>
 
-      {/* Students Table */}
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>International?</th>
-            <th>Max Hours</th>
-            <th>iCal Uploaded?</th>
-            <th>Priority (1-5)</th>
-            <th>Prefer working on Class Days</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((stu) => (
-            <tr key={stu.id}>
-              <td>{`${stu.firstName} ${stu.lastName}`}</td>
-              <td>
-                <select
-                  value={stu.isInternational ? 'Yes' : 'No'}
-                  onChange={(e) => handleInternationalChange(stu.id, e.target.value)}
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </td>
-              <td>
-                <input
-                  type="number"
-                  value={stu.maxHours || 0}
-                  onChange={(e) => handleMaxHoursChange(stu.id, e.target.value)}
-                  min="0"
-                  max={stu.isInternational ? "20" : "40"}
-                  title={stu.isInternational ? "Maximum 20 hours for international students" : "Maximum 40 hours for non-international students"}
-                />
-                <small className="text-muted ms-2">
-                  {stu.isInternational ? "(Max: 20)" : "(Max: 40)"}
-                </small>
-              </td>
-              <td>{stu.icalSubmitted ? 'Yes' : 'No'}</td>
-              <td>
-                <input
-                  type="number"
-                  min="1"
-                  max="5"
-                  value={stu.priority || 1}
-                  onChange={(e) => handlePriorityChange(stu.id, e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={stu.preferClassDays || false}
-                  onChange={(e) => handlePreferClassDaysChange(stu.id, e.target.checked)}
-                />
-              </td>
-              <td>
-                <button
-                  onClick={() => handleDeleteStudent(stu.id)}
-                  className="btn btn-sm btn-danger"
-                >
-                  Delete
-                </button>
-              </td>
+      {/* submit button */}
+      <button
+        className="btn btn-success mb-3"
+        disabled={!students.some((s) => !s.synced)}
+        onClick={submitNew}
+      >
+        Submit New Students → DB
+      </button>
+
+      {statusMsg && <div className="alert alert-info py-2">{statusMsg}</div>}
+
+      {/* table */}
+      <div className="table-responsive">
+        <table className="table align-middle">
+          <thead className="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Intl?</th>
+              <th>Max Hours</th>
+              <th>Priority</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {students.map((s) => (
+              <tr key={s.id}>
+                <td>{s.firstName} {s.lastName}</td>
+                <td>
+                  {s.synced ? (
+                    <span className="badge bg-success">✔︎</span>
+                  ) : (
+                    <span className="badge bg-danger">📌 Pending</span>
+                  )}
+                </td>
+
+                <td>
+                  <select
+                    value={s.isInternational ? "Yes" : "No"}
+                    onChange={(e) => {
+                      if (!s.synced) return;
+                      const intl = e.target.value === "Yes";
+                      const capped = Math.min(intl ? 20 : 40, s.maxHours || 0);
+                      const row = { ...s, isInternational: intl, maxHours: capped };
+                      patch(s.id, row);
+                      fireUpdateAPI(row);
+                    }}
+                    disabled={!s.synced}
+                  >
+                    <option>No</option>
+                    <option>Yes</option>
+                  </select>
+                </td>
+
+                <td>
+                  <input
+                    type="number"
+                    className="form-control form-control-sm"
+                    style={{ width: 80 }}
+                    min="0"
+                    max={s.isInternational ? 20 : 40}
+                    value={s.maxHours}
+                    onChange={(e) => {
+                      if (!s.synced) return;
+                      const row = { ...s, maxHours: Number(e.target.value) };
+                      patch(s.id, row);
+                      fireUpdateAPI(row);
+                    }}
+                    disabled={!s.synced}
+                  />
+                </td>
+
+                <td>
+                  <input   
+                    type="number"
+                    className="form-control form-control-sm"
+                    style={{ width: 60 }}
+                    min="0"
+                    max="5"    
+                    value={s.priority}
+                    onChange={(e) => {
+                      if (!s.synced) return;
+                      const row = { ...s, priority: Number(e.target.value) };
+                      patch(s.id, row);
+                      fireUpdateAPI(row);
+                    }}
+                    disabled={!s.synced}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
