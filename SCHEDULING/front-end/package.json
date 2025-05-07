@@ -1,0 +1,26 @@
+{
+  "name": "cs410_long_project",
+  "version": "1.0.0",
+  "description": "Google Docs (Requirements)\r https://docs.google.com/document/d/1uq0FvCTBsU_QHVjUseUc6RyQTxzBtcA-GCWXuh7Ls6k/edit?usp=sharing",
+  "main": "index.js",
+  "scripts": {
+    "start": "node adminLog-in/adminLogin_Server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kingsam147/CS410-Student-Scheduling-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kingsam147/CS410-Student-Scheduling-Project/issues"
+  },
+  "homepage": "https://github.com/Kingsam147/CS410-Student-Scheduling-Project#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "google-auth-library": "^9.15.1",
+    "pm2": "^6.0.5"
+  }
+}

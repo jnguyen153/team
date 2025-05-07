@@ -4,6 +4,7 @@ import Products from "./pages/gallery";
 import Checkout from './pages/Checkout';
 import CheckoutCompletePage from "./pages/CheckoutCompletePage";
 import Account from "./pages/Account";
+import ProductPages from "./pages/productPages";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/checkout_complete" element={<CheckoutCompletePage />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/products/:id" element={<ProductPages />} />
       </Routes>
     </BrowserRouter>
   )
