@@ -105,7 +105,15 @@ const Navbar = () => {
                         </div>
                         <ul className="py-2 text-gray-500">
                           <li className="px-4 py-2 hover:bg-gray-100">
-                            <a href="#">View Profile</a>
+                            <button
+                              onClick={() => {
+                                setIsProfileClicked(false);
+                                navigate('/account');
+                              }}
+                              className="w-full text-left"
+                            >
+                              Account Management
+                            </button>
                           </li>
                           <li className="px-4 py-2 hover:bg-gray-100">
                             <a href="#">Order History</a>
