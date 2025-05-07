@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   PaymentElement,
+  AddressElement,
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
@@ -66,10 +67,23 @@ const StripeCheckoutForm = () => {
     layout: "accordion" as const
   };
 
+  const addressElementOptions = {
+    mode: 'shipping' as const,
+    allowedCountries: ['US'],
+  };
+
   return (
     <div>
-      <form id="payment-form" onSubmit={handleSubmit} className="space-y-4">
-        <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <form id="payment-form" onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white p-4 rounded-lg border border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Payment Information</h3>
+          <PaymentElement id="payment-element" options={paymentElementOptions} />
+        </div>
+
+        <div className="bg-white p-4 rounded-lg border border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Shipping Information</h3>
+          <AddressElement options={addressElementOptions} />
+        </div>
         
         {message && (
           <div className="text-red-600 text-sm p-2 bg-red-50 border border-red-200 rounded">
