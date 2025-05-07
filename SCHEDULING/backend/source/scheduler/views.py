@@ -5,9 +5,6 @@ import pytz
 import json
 from .models import AdminSubmission, Employee, SavedSchedules
 
-def get_schedules(request):
-    return JsonResponse({'schedules': []})
-
 @csrf_exempt
 def admin_form_submission(request):
     if request.method != 'POST':
@@ -16,14 +13,12 @@ def admin_form_submission(request):
     students=body.get('listofstudents')
     for key in students:
         Employee.objects.create(
-            employee_id= key.get('student_id')
-            student_id= key.get('student_id')
+            employee_id= key.get('student_id'),
+            student_id= key.get('student_id'),
             email=key.get('student_email')
         )
-    '''body = json.loads(request.body)
-    AdminSubmission.objects.create(data=body)'''
     return JsonResponse({'status': 'admin form received'})
-    
+
 
 def convert_events_to_unavailability_matrix(events):
     tz = pytz.timezone("America/New_York")
@@ -102,20 +97,20 @@ def update_parameters(request):
         exisitng_params = Employee.objects.get(student_id=student_id).params
         # update mappings if provided in JSON request body
         if 'max_hours' in new_params:
-            exisitng_params.max_hours = new_params.get('max')
+            exisitng_params['max_hours'] = new_params['max_hours']
         if 'f1_status' in new_params:
-            exisitng_params.f1_status = new_params.get('f1_status')
+            exisitng_params['f1_status'] = new_params['f1_status']
         if 'priority' in new_params:
-            exisitng_params.priority = new_params.get('priority')
+            exisitng_params['priority'] = new_params['priority']
         exisitng_params.save()
         return JsonResponse({'status': 'Parameters updated'}, status=204)
     except Employee.DoesNotExist:
-        return JsonResponse({'error': 'student_id not found in database'}, status=404)
+        return JsonResponse({'error': 'Unique identifier: student_id not found in database'}, status=404)
 
 @csrf_exempt
 def get_schedules(request):
     if request.method == 'GET':
-        data = SavedSchedules.object.first()
+        data = SavedSchedules.objects.first()
         return JsonResponse({'status': 'schedules request successful', 'data': data}, status=200)
     return JsonResponse({'error': 'Only GET allowed'}, status=405)                
 
