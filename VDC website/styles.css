@@ -954,8 +954,15 @@ transition: all 0.5s ease-in-out;
   display: flex;
   justify-content: center;
   gap: 4rem;
-  padding: 4rem 2rem;
+  padding: rem 2rem;
+  position: relative; /* Essential for absolute children */
+  background: 
+  linear-gradient(rgba(19, 34, 69, 0.7), rgba(19, 34, 69, 0.7)), 
+  url('vertical.jpg') center/cover no-repeat;
+  min-height: 100vh;
+  align-items: center;
 }
+
 
 .lab-card {
   position: relative;
@@ -999,7 +1006,6 @@ transition: all 0.5s ease-in-out;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #13224577; /* translucent blue */
   z-index: 1;
   transition: opacity .8s ease;
   pointer-events: none; /* lets clicks pass through */
@@ -1011,22 +1017,29 @@ transition: all 0.5s ease-in-out;
 
 /* Vacancies Intro Section */
 .vacancies-intro {
-  padding: 40px 20px;
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
   text-align: center;
-  background-color: #FFFFF0; /* Light, white-ish background */
+  max-width: 800px;
+  z-index: 2;
 }
 
 .vacancies-intro h2 {
   font-size: 2rem;
-  color: #132245; /* Dark blue */
+  color: #ffffff; 
   margin-bottom: 10px;
 }
 
 .vacancies-intro p {
   font-size: 1.1rem;
-  color: #132245; /* Dark blue text */
+  color: #ffffff;
   line-height: 1.6;
-  max-width: 800px;
+  max-width: 80%;
   margin: 0 auto;
 }
 
@@ -1375,7 +1388,7 @@ transition: all 0.5s ease-in-out;
 .apply-hero {
   position: relative;
   background: url('vertical.jpg') center/cover no-repeat;
-  min-height: 320vh; 
+  min-height: 320vh; /* or any height you want */
   display: flex;
   align-items: center;
   justify-content: center;
