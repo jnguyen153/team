@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import pytz
 import json
 from .models import AdminSubmission, Employee, SavedSchedules
+from source.scheduler.engine import ScheduleEngine
 
 @csrf_exempt
 def admin_form_submission(request):
@@ -118,7 +119,29 @@ def get_schedules(request):
 def generate_schedule(request):
     if request.method != 'GET':
         return JsonResponse({'error': 'Only GET allowed'}, status=405)
-    return JsonResponse({'status': 'admin form received'})
+
+    from .models import Employee
+    employees = Employee.objects.exclude(schedule=None)
+
+    if not employees.exists():
+        return JsonResponse({'error': 'No students with availability submitted'}, status=404)
+
+    try:
+        # Initialize the scheduling engine
+        engine = ScheduleEngine(employees=list(employees))  # must be a list
+        schedule_result = engine.schedule()  # returns dict {employee_id: [schedule_strs]}
+
+        return JsonResponse({
+            'status': 'success',
+            'schedules': schedule_result
+        }, status=200)
+
+    except Exception as e:
+        return JsonResponse({
+            'error': 'Schedule generation failed',
+            'details': str(e)
+        }, status=500)
+
     
 @csrf_exempt
 def save_schedule(request):
