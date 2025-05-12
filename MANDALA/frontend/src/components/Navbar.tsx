@@ -13,7 +13,7 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isGalleryPage = location.pathname === '/gallery';
+  const isGalleryLikePage = location.pathname.startsWith('/gallery') || location.pathname.startsWith('/product');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,7 +50,7 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md' : isGalleryPage ? 'bg-gray-900' : 'bg-transparent'
+        isScrolled ? 'bg-white shadow-md' : isGalleryLikePage ? 'bg-gray-900' : 'bg-transparent'
       }`}
     >
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,7 +105,15 @@ const Navbar = () => {
                         </div>
                         <ul className="py-2 text-gray-500">
                           <li className="px-4 py-2 hover:bg-gray-100">
-                            <a href="#">View Profile</a>
+                            <button
+                              onClick={() => {
+                                setIsProfileClicked(false);
+                                navigate('/account');
+                              }}
+                              className="w-full text-left"
+                            >
+                              Account Management
+                            </button>
                           </li>
                           <li className="px-4 py-2 hover:bg-gray-100">
                             <a href="#">Order History</a>

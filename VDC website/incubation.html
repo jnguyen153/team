@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>VDC Website</title>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><img src= "vdc 2.png" alt="VDC logo"></a>
+        <nav>
+            <div class="dropdown">
+                <a href="#">Who We Are</a>
+                <div class="dropdown-content">
+                    <a href="placeholder.html">Team</a>
+                    <a href="placeholder.html">Companies</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#">What We Offer</a>
+                <div class="dropdown-content">
+                    <a href="coreResearch.html">Core Research Facilities</a>
+                    <a href="placeholder.html">Entrepreneur Visa Sponsorship</a>
+                    <a href="studentEntreProg.html">Student Entrepreneur Program</a>
+                    <a href="incubation.html">Venture Incubation Program</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="vacancies.html">Lab Vacancies</a>
+            </div>
+            <div class="dropdown">
+                <a href="events.html">Events</a>
+            </div>
+            <div class="dropdown">
+                <a href="apply.html">Apply</a>
+                </div>
+            <div class="dropdown">
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </nav>
+    </header>
+
+
+
+    <section id="vip">
+        <h2 class="section-title">Venture Incubation Program</h2>
+      
+        <div class="accordion-container">
+      
+          <div class="accordion-item">
+            <button class="accordion-header">Program Overview</button>
+            <div class="accordion-content">
+              <p>The Venture Incubation Program is open to companies regardless of their founders' alma mater...</p>
+              <ul>
+                <li>Cap-exempt H-1B visa sponsorship anytime during the year.</li>
+                <li>Access to a team experienced in billion-dollar companies.</li>
+                <li>Fully equipped lab and office space.</li>
+                <li>Talented interns, UMass resources, and instruments.</li>
+                <li>Community lunches and mentorship office hours.</li>
+              </ul>
+            </div>
+          </div>
+      
+          <div class="accordion-item">
+            <button class="accordion-header">Laboratories, Offices, and Desks</button>
+            <div class="accordion-content">
+              <p><em>Included in membership</em></p>
+              <ul>
+                <li>Private wet/dry labs, furnished offices, shared desks.</li>
+                <li>Conference rooms, lounge, café, kitchen.</li>
+              </ul>
+            </div>
+          </div>
+      
+          <div class="accordion-item">
+            <button class="accordion-header">Services</button>
+            <div class="accordion-content">
+              <p><em>Included in membership</em></p>
+              <ul>
+                <li>Shipping, hosting, printing, EHS compliance, waste removal.</li>
+              </ul>
+            </div>
+          </div>
+      
+          <div class="accordion-item">
+            <button class="accordion-header">Infrastructure</button>
+            <div class="accordion-content">
+              <p><em>Included in membership</em></p>
+              <ul>
+                <li>3D printer, biosafety cabinets, autoclave, centrifuges, etc.</li>
+              </ul>
+            </div>
+          </div>
+      
+          <div class="accordion-item">
+            <button class="accordion-header">Core Facilities</button>
+            <div class="accordion-content">
+              <ul>
+                <li>Genomics, imaging, microscopy, flow cytometry, etc.</li>
+              </ul>
+              <p>Discounted access to 90 UMass research facilities via Innovation Voucher Program.</p>
+            </div>
+          </div>
+      
+          <div class="accordion-item">
+            <button class="accordion-header">Membership</button>
+            <div class="accordion-content">
+              <ul>
+                <li>10–15 companies accepted per year; 13% acceptance rate.</li>
+                <li>$750 to $10,000/month depending on facility type.</li>
+                <li>Month-to-month flexibility.</li>
+              </ul>
+              <p><strong>Have questions?</strong> Please apply and we’ll reach out.</p>
+            </div>
+          </div>
+      
+        </div>
+      </section>
+      
+      
+      
+      
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Address</h3>
+                <p>Venture Development Center</p>
+                <p>UMass Boston, Wheatley Hall</p>
+                <p>100 Morrissey Blvd, Boston, MA 02125-3393</p>
+            </div>
+            <div class="footer-section">
+                <h3>Phone</h3>
+                <p>(617) 287-6070</p>
+            </div>
+            <div class="footer-section">
+                <h3>Email</h3>
+                <p><a href="mailto:vdc@umb.edu">vdc@umb.edu</a></p>
+            </div>
+            <div class="footer-section">
+                <a href="https://www.facebook.com/pages/Venture-Development-Center-UMass-Boston/140489986060643"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://x.com/umassvdc"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.youtube.com/@umassvdc"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/umassvdc/"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <a href="contact.html" class="floating-button">Contact Us</a>
+    
+    <script>
+        const accordions = document.querySelectorAll('.accordion-header');
+        accordions.forEach(header => {
+          header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const isOpen = content.style.display === 'block';
+            document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
+            content.style.display = isOpen ? 'none' : 'block';
+          });
+        });
+      </script>
+</body>
+</html>

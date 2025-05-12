@@ -11,7 +11,7 @@ function MyCalendar({ tempEvents, setTempEvents }) {
 
     const handleDateClick = (info) => {
         const currentClickTime = Date.now();
-
+      
         if (lastClickTime && currentClickTime - lastClickTime <= 700) {
             const newEvent = {
                 id: String(tempEvents.length + 1),

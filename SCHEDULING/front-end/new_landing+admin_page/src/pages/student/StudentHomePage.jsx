@@ -13,10 +13,10 @@ export default function StudentHomePage() {
         <li>Click on <strong>Email as a .ics</strong>.</li>
         <li>You will receive the file in your college ID email. Download the file.</li>
         <li>Then, go to the Schedule page and upload it in the <strong>Upload iCal</strong> option.</li>
-      </ol>
+      </ol>    
       <p>
         <a href="/student/schedule" className="btn btn-primary">Go to My Schedule</a>
       </p>
     </div>
   );
-}
+}    

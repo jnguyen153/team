@@ -253,54 +253,140 @@ footer {
   text-align: center;
 }
 
-.about-icon1,
-.about-icon2,
-.about-icon3,
-.about-icon4 {
+.mountain-section {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  margin-top: 4rem;
+}
+
+.mountain-path {
   position: absolute;
-  width: 60px;
-  height: 60px;
-  z-index: 2;
-  transition: transform 0.3s ease;
-}
-
-.about-icon1 { top: 350px; left:  950px; }
-.about-icon2 { top: 520px; left:  770px; }
-.about-icon3 { top: 700px; left:  550px; }
-.about-icon4 { top: 820px; left:  310px; }
-
-.about-icon1:hover,
-.about-icon2:hover,
-.about-icon3:hover,
-.about-icon4:hover {
-  transform: scale(1.1);
-}
-
-.about-icon1 img,
-.about-icon2 img,
-.about-icon3 img,
-.about-icon4 img {
+  top: 140px;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  z-index: 1;
+}
+
+.icon-container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: center;
   z-index: 2;
 }
 
-.icon-description {
-  display: none;
+.about-icon {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.icon-text {
   position: absolute;
-  top: 70px; /* below the icon */
+  top: -330px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #ffffffdd;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  background: rgba(255, 251, 224, 0.95);
+  padding: 10px 12px;
+  border-radius: 6px;
   font-size: 1.2rem;
-  color: #132245;
-  white-space: nowrap;
-  z-index: 3;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: #333;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  white-space: normal;
+  max-width: 300px; /* ✅ restrict width */
+  text-align: left;
+  z-index: 5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
 }
+
+
+.mountain-section:hover .icon-text {
+  opacity: 1;
+}
+
+.begin-label {
+  position: absolute;
+  bottom: -150px;
+  left: -150px;
+  font-size: 1.9rem;
+  font-weight: bold;
+  background-color: #fffbe0;
+  color: #132245;
+  padding: 4px 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  z-index: 3;
+}
+
+
+#vip {
+  padding: 6rem 10%;
+  background-color: #FFFFF0; /* your off-white base */
+}
+
+.section-title {
+  font-size: 3.2rem;
+  text-align: center;
+  color: #132245; /* main deep blue */
+  margin-bottom: 4rem;
+  font-weight: 800;
+}
+
+.accordion-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.accordion-header {
+  background-color: #005A8B; /* bold blue */
+  color: white;
+  cursor: pointer;
+  padding: 2rem 2.5rem;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  font-size: 1.8rem;
+  font-weight: 700;
+  transition: background 0.3s ease;
+  border-radius: 8px 8px 0 0;
+}
+
+.accordion-header:hover {
+  background-color: #FF791F; /* bright orange hover */
+}
+
+.accordion-content {
+  background: #E9EDC8; /* light soft background */
+  padding: 2rem 2.5rem;
+  display: none;
+  font-size: 1.4rem;
+  line-height: 2;
+  border: 1px solid #50403E;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  color: #132245;
+}
+
+.accordion-item + .accordion-item {
+  margin-top: 2rem;
+}
+
+.accordion-content ul {
+  padding-left: 2rem;
+  margin-top: 1.2rem;
+  font-size: 1.3rem;
+  line-height: 2;
+  color: #132245;
+}
+
+
+
+
 
 
 
@@ -1302,7 +1388,7 @@ transition: all 0.5s ease-in-out;
 .apply-hero {
   position: relative;
   background: url('vertical.jpg') center/cover no-repeat;
-  min-height: 350vh; /* or any height you want */
+  min-height: 320vh; /* or any height you want */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1314,29 +1400,30 @@ transition: all 0.5s ease-in-out;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(19, 34, 69, 0.7); /* dark semi-transparent overlay */
+  background: rgba(19, 34, 69, 0.7); 
   z-index: 1;
 }
 .apply-hero-content {
   position: relative;
   z-index: 2;
-  color: #fff; /* makes sure text is readable */
+  color: #FFFFF0; 
   max-width: 600px;
   width: 90%;
   margin: auto;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.05); /* optional light box */
-  backdrop-filter: blur(5px); /* optional frosted glass effect */
+  background-color: rgba(255, 255, 255, 0.05); 
+  backdrop-filter: blur(5px); 
   border-radius: 12px;
 }
  .apply-hero-content h1 {
  text-align: center;
  margin-bottom: 0.5rem;
+ color: #FEDE42;
 }
 .apply-hero-content p {
  text-align: center;
  margin-bottom: 1.5rem;
- color: #fff;
+ color: #FEDE42;
 }
 .apply-hero form {
  display: flex;
@@ -1346,14 +1433,14 @@ transition: all 0.5s ease-in-out;
 .apply-hero input,
 .apply-hero textarea {
  padding: 0.75rem;
- border: 1px solid #ccc;
+ border: 1px solid #FFFFF0;
  border-radius: 10px;
  font-size: 1rem;
  width: 100%;
 }
 .apply-hero button {
  background-color: #003366;
- color: white;
+ color: #FEDE42;
  padding: 0.75rem;
  border: none;
  border-radius: 10px;
